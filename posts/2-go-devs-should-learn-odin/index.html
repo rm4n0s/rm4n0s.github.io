@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://rm4n0s.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://rm4n0s.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://rm4n0s.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://rm4n0s.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rm4n0s.github.io//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+<title>
+    
+    Golang developers should try Odin | (a)RManos Blog
+    
+</title>
+
+<link rel="canonical" href="https://rm4n0s.github.io/posts/2-go-devs-should-learn-odin/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="auto">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">(a)RManos Blog</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/2-go-devs-should-learn-odin/">Golang developers should try Odin</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Golang developers should try Odin</h1>
+    
+    <p class="single-summary">The Hitchhiker&rsquo;s Guide to Valhalla</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-10-24T00:00:00&#43;00:00">October 24, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      14 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#what-is-odin-and-who-is-it-for">What is Odin and who is it for</a></li>
+    <li><a href="#odin-is-ready">Odin is ready</a></li>
+    <li><a href="#the-characteristics-of-odin">The characteristics of Odin</a></li>
+    <li><a href="#the-trade-offs">The trade offs</a></li>
+    <li><a href="#living-without-a-garbage-collector">Living without a garbage collector</a>
+      <ul>
+        <li><a href="#error-handling">Error handling</a></li>
+        <li><a href="#memory-management">Memory management</a></li>
+        <li><a href="#interfaces">Interfaces</a></li>
+        <li><a href="#threads">Threads</a></li>
+      </ul>
+    </li>
+    <li><a href="#in-conclusion">In conclusion</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <p>(BEWARE: the article may cause seizures)</p>
+<h2 id="introduction">Introduction</h2>
+<p>I&rsquo;ve been using Golang for 10 years, and even though I tried other programming languages, I always went back to it because of its simplicity.</p>
+<p>It is so simple that reading the source code and playing around helped me pick up the majority of the syntax when I first got into Golang.</p>
+<p>However, it pains me to say that Golang has problems because of its garbage collector and runtime.</p>
+<p>Some of the problem are listed here:</p>
+<ul>
+<li>CGO
+<ul>
+<li>It runs and compiles slowly</li>
+<li>You have to know and write C in comments!!</li>
+<li>It can not compile to WASM</li>
+</ul>
+</li>
+<li>The language is slow compared to Rust</li>
+<li>It is easy to have memory leaks and they are hard to find.</li>
+<li>The error type is not good</li>
+</ul>
+<p>But even with these problems, I still prefer Golang to other programming languages, until I met Odin a week ago, and it was love at first sight.</p>
+<p>This article will show you the beauty of Odin.</p>
+<h2 id="what-is-odin-and-who-is-it-for">What is Odin and who is it for</h2>
+<p>Odin is a new programming language that is</p>
+<ul>
+<li>60% Golang,</li>
+<li>20% features that you wished Golang had</li>
+<li>10% array programming</li>
+<li>10% low level, FFI, memory management</li>
+</ul>
+<p>People think that it is only for game development just because it includes 3D libraries with the compiler, but I disagree.
+Odin is also for backend development because it has a core library similar to Go&rsquo;s standard library. Which means that it has all the building blocks
+for us to copy the rest of Go&rsquo;s libraries like Chinese manufacturers.</p>
+<p>I know that some of you play around with Rust, Zig, C3 or Hare, but these do not have array programming and struct tags in their languages.</p>
+<p>Just ask yourself:</p>
+<ul>
+<li>how will you serialize data between DBs and markup languages without struct tags?</li>
+<li>how will you write a server side anticheat without array programming? Don&rsquo;t you want to make linux gamers happy?</li>
+</ul>
+<p>It even has quaternions! Do you know what that is? Me neither! But I am excited to learn.</p>
+<h2 id="odin-is-ready">Odin is ready</h2>
+<p>The language will not change and it will stay stable until you retire.
+However, the compiler, toolchain, and core library are still in development and always improved.</p>
+<p>Also, it is used in production from JangaFX and ChiAha™</p>
+<h2 id="the-characteristics-of-odin">The characteristics of Odin</h2>
+<p>The language has 31 keywords, but each keyword may have a #directive or @(attribute).
+It may seem too much for someone that cannot remember more than 26 keywords like me, but all the keywords,
+directives, and attributes connect so seamlessly together like reading English.</p>
+<p>For example, the switch-case that works like in Golang requires from the user to specify every case, unless you put the #partial directive in front of it.</p>
+<p>It will really make sense to you how easy it is for you to understand the code without knowing the language.
+Take 10 minutes to read <a href="https://github.com/odin-lang/Odin/blob/master/examples/demo/demo.odin">demo.odin</a>,
+it&rsquo;s got almost everything you need to get started.</p>
+<p>Yes, it does not have documentation (no, the <a href="https://odin-lang.org/docs/overview/">overview</a> is not a real documentation), but that is the beauty of it.
+You learn to code in Odin by reading other&rsquo;s people code.
+Most of the standard library does not have comments or examples,
+but you can easily understand how to use it through its source code.</p>
+<p>No, it does not have macros, or comptime, or constexpr or decorators and it is better that way
+because every language that has them makes developers to waste 90% of their time googling for every library that uses them.</p>
+<p>Trust me, stick with Odin&rsquo;s pre-defined directives and attributes.</p>
+<p>Yes, it has generics, and they are more well-designed than Golang’s generics.</p>
+<p>No, it does not have a package manager, or go.mod file or anything else.
+The package is just a directory that you just copy to your project, and you call it relative to the path of the source code file.</p>
+<p>For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span><span style="color:#75715e">// git clone https://github.com/laytan/odin-http
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// vim main.odin
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">package</span> main
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> http <span style="color:#e6db74">&#34;odin-http&#34;</span>
+</span></span></code></pre></div><p>Yes, compiler is as simple as Golang&rsquo;s compiler.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd myproject
+</span></span><span style="display:flex;"><span>odin build .
+</span></span><span style="display:flex;"><span>odin run main.odin -file
+</span></span></code></pre></div><p>Yes, it has VSCode plugin with autocompletion.</p>
+<h2 id="the-trade-offs">The trade offs</h2>
+<p>Odin has manual memory management, which is why it does not have Closures, Composition, Goroutines, and Selectors. However, I will demonstrate how you can live without them.</p>
+<p>Second, it lacks libraries, which is why I&rsquo;m trying to get you to learn it and get your libraries from Go to Odin.</p>
+<p>Lastly, it does not have documentation or books, but if you have years of experience in Go, then Odin will feel like home.</p>
+<h2 id="living-without-a-garbage-collector">Living without a garbage collector</h2>
+<h3 id="error-handling">Error handling</h3>
+<p>Living without a garbage collector means that you don&rsquo;t have errors.New() or fmt.Errorf().
+There is no error type in Odin.
+You only have Enums, Unions and Structs, and that is better than Go&rsquo;s errors.</p>
+<h4 id="gos-errors-suck">Go&rsquo;s errors suck</h4>
+<p>Golang&rsquo;s errors makes you push server-side error messages to users, and you cannot do anything to stop it.
+That is not a good thing because users don&rsquo;t need to know what is SQL or that the bank_account is nil.</p>
+<p>Furthermore, another problem is that Go&rsquo;s errors do not have stack traces.</p>
+<h4 id="now-look-at-the-superpower-of-odin">Now look at the superpower of Odin</h4>
+<p>For each function you create, also include an enum or a union or a struct to represent the error for that specific function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    Payment_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	    None,
+</span></span><span style="display:flex;"><span>	    Bank_Account_Is_Empty,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Pay_Half_Debt_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>        Payment_Error,
+</span></span><span style="display:flex;"><span>        json.Marshal_Error,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Save_House_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>        Pay_Half_Debt_Error,
+</span></span><span style="display:flex;"><span>        Is_Even_Worth_Saving_Error,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// etc
+</span></span></span></code></pre></div><p>When a function returns an error that it received from another function, and so forth, you will receive a type similar to this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    err <span style="color:#f92672">:=</span> Extend_Deadline_Error(
+</span></span><span style="display:flex;"><span>		Save_House_Error(
+</span></span><span style="display:flex;"><span>            Pay_Half_Debt_Error(
+</span></span><span style="display:flex;"><span>                Payment_Error.Bank_Account_Is_Empty
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>	)
+</span></span></code></pre></div><p>From there you can create trees of switch statements that return proper user messages.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    <span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> save_house <span style="color:#66d9ef">in</span> err {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> Save_House_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		pay_half <span style="color:#f92672">:=</span> save_house.(Pay_Half_Debt_Error)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> pay <span style="color:#66d9ef">in</span> pay_half {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Payment_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> pay {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Bank_Account_Is_Empty<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				fmt.println(<span style="color:#e6db74">&#34;You have 24 hours to leave the house.&#34;</span>)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>And also you can print it like a stack trace using <a href="https://github.com/rm4n0s/trace">my library</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    <span style="color:#75715e">// this condition works thanks to #shared_nil directive in union
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		tr <span style="color:#f92672">:=</span> trace.trace(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">delete</span>(tr) <span style="color:#75715e">// defer works in scopes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		fmt.println(tr)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// prints: Extend_Deadline_Error -&gt; Save_House_Error -&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//Pay_Half_Debt_Error -&gt; Payment_Error.Bank_Account_Is_Empty
+</span></span></span></code></pre></div><p>Even by looking the type of errors you can guess what the functions do.</p>
+<p>No other programming language can do that.</p>
+<p>If Odin can&rsquo;t help the economy, then nothing can.</p>
+<h3 id="memory-management">Memory management</h3>
+<h4 id="lets-be-clear">Lets be clear</h4>
+<p>Before we talk about memory management let me clarify three things:</p>
+<ol>
+<li>No matter what the person with the programming socks told you, Odin does not have security vulnerabilities in its memory allocators.</li>
+<li>Memory leaks can occur in all programming languages, but what matters is how easily you can find them and fix them.</li>
+<li>If you don&rsquo;t handle memory yourself, then Odin will never accept you in Valhalla.</li>
+</ol>
+<h4 id="a-mini-introduction">A mini introduction</h4>
+<p>If you read <a href="https://github.com/odin-lang/Odin/blob/master/examples/demo/demo.odin">demo.odin</a> then you already know how pointers work, but if you haven&rsquo;t already then just remember:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    n <span style="color:#f92672">:</span> <span style="color:#f92672">^</span><span style="color:#66d9ef">int</span> <span style="color:#75715e">// this is how you assign pointer type 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    n <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>) <span style="color:#75715e">// this is how you create a new pointer 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    assert(n<span style="color:#f92672">^</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">0</span>) <span style="color:#75715e">// remember that all pointers have default values
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    n<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">2</span> <span style="color:#75715e">// this is how you assign a value to a pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    fmt.println(n<span style="color:#f92672">^</span>) <span style="color:#75715e">//this is how you read the value from a pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    free(n) <span style="color:#75715e">//this is how you free a pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// make()/delete() is for strings, array and maps. 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// For the rest of the types use new()/free()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    arr <span style="color:#f92672">:=</span> <span style="color:#66d9ef">make</span>([<span style="color:#66d9ef">dynamic</span>]<span style="color:#66d9ef">int</span>) 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span>(arr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// make(),delete(),new() and free() accept allocators
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// if you don&#39;t add an allocator then they use the default.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// context.allocator is the default allocator
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    my_allocator <span style="color:#f92672">:=</span> <span style="color:#66d9ef">context</span>.allocator 
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">:=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>, my_allocator)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// you can also change the default allocator
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">context</span>.allocator <span style="color:#f92672">=</span> my_allocator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// import &#34;core:mem&#34; has many other types of allocators
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// like Tracking_Allocator to track leaks
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// and Panic_Allocator useful for spaceship software
+</span></span></span></code></pre></div><h4 id="the-gotchas">The gotchas</h4>
+<p>If you double delete() or double free() a pointer, then the you will get &ldquo;Segmentation fault&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>    arr <span style="color:#f92672">:=</span> <span style="color:#66d9ef">make</span>([<span style="color:#66d9ef">dynamic</span>]<span style="color:#66d9ef">int</span>) 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span>(arr)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span>(arr) <span style="color:#75715e">// causes &#34;Segmentation fault&#34;
+</span></span></span></code></pre></div><p>If you read pointer after free() or delete(), you will get random value</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>	n <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	n<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">2</span>
+</span></span><span style="display:flex;"><span>	free(n)
+</span></span><span style="display:flex;"><span>	fmt.println(n<span style="color:#f92672">^</span>) <span style="color:#75715e">// it will not print 2 but something random
+</span></span></span></code></pre></div><p>If you make() an array of new() pointers then you have to free() the pointers inside the array before deleting the array, or else it will cause a memory leak.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>   	arr <span style="color:#f92672">:=</span> <span style="color:#66d9ef">make</span>([<span style="color:#66d9ef">dynamic</span>]<span style="color:#f92672">^</span><span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">0</span> <span style="color:#f92672">..&lt;</span> <span style="color:#a6e22e">10</span> {
+</span></span><span style="display:flex;"><span>		n <span style="color:#f92672">:=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>		n<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">append</span>(<span style="color:#f92672">&amp;</span>arr, n)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// if you don&#39;t free each item
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// for n in arr {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//   free(n)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// then this will leak
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">delete</span>(arr)
+</span></span></code></pre></div><h4 id="my-rules-to-avoid-gotchas">My rules to avoid gotchas</h4>
+<p>For your global pointers, assign nil after you deallocate them and check for nil before you deallocate, read, or assign the pointer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>	global <span style="color:#f92672">:=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> global <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		free(global)
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// after deallocation assign nil to the pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		global <span style="color:#f92672">=</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// so other procedures can:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// - check before assign
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> global <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		global<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">2</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// - check before they read
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> global <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.println(global<span style="color:#f92672">^</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// - check for nils and not double free
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> global <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		free(global)
+</span></span><span style="display:flex;"><span>		global <span style="color:#f92672">=</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>For your local pointers, use defer to deallocate the pointer.
+Always put defer under the allocation so it is easy to see the deallocation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	n <span style="color:#f92672">:=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> free(n) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	n<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">2</span>
+</span></span><span style="display:flex;"><span>	fmt.println(n<span style="color:#f92672">^</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// defer will run the free() here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>If a procedure contains the parameter &ldquo;allocator := context.allocator&rdquo; then 99% of the time the results need to be deallocated.
+This means that you have to call delete()/free() or call another procedure from the same library that will deallocate the pointer for you.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// when a procedure creates a pointer with a deallocator then it has name that ends with _init
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    multi_reader_init <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>		mr<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Multi_Reader, 
+</span></span><span style="display:flex;"><span>		readers<span style="color:#f92672">:</span> ..Reader, 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		 <span style="color:#75715e">// always look at the end of parameter lists for &#34;allocator&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		allocator <span style="color:#f92672">:=</span> <span style="color:#66d9ef">context</span>.allocator) <span style="color:#f92672">-&gt;</span> (r<span style="color:#f92672">:</span> Reader)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// its deallocator has a name that ends with _destroy
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	multi_reader_destroy <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(mr<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Multi_Reader)
+</span></span></code></pre></div><p>Use Arena_Allocator to allocate an array of pointers and then just destroy the arena.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>	arr_arena<span style="color:#f92672">:</span> virtual.Arena
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create arena allocator
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	arena_allocator <span style="color:#f92672">:=</span> virtual.arena_allocator(<span style="color:#f92672">&amp;</span>arr_arena)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create the array using the arena allocator
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	arr <span style="color:#f92672">:=</span> <span style="color:#66d9ef">make</span>([<span style="color:#66d9ef">dynamic</span>]<span style="color:#f92672">^</span><span style="color:#66d9ef">int</span>, allocator <span style="color:#f92672">=</span> arena_allocator)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">0</span> <span style="color:#f92672">..&lt;</span> <span style="color:#a6e22e">10</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// include the items in the arena
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		n <span style="color:#f92672">:=</span> <span style="color:#66d9ef">new</span>(<span style="color:#66d9ef">int</span>, allocator <span style="color:#f92672">=</span> arena_allocator)
+</span></span><span style="display:flex;"><span>		n<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">append</span>(<span style="color:#f92672">&amp;</span>arr, n)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// delete everything in a single sweep
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	virtual.arena_destroy(<span style="color:#f92672">&amp;</span>arr_arena)
+</span></span></code></pre></div><h3 id="interfaces">Interfaces</h3>
+<p>Odin does not have interfaces, which is why I say that they work like quantum entities. When you look at them, they act like interfaces, but when you don&rsquo;t look at them, they are just pointers.</p>
+<p>There are two ways to write interfaces in Odin.</p>
+<h4 id="do-it-like-in-go">Do it like in Go</h4>
+<p>This example emulates composition.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Stringer_Interface <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	data<span style="color:#f92672">:</span>   <span style="color:#66d9ef">rawptr</span>,
+</span></span><span style="display:flex;"><span>	sprint<span style="color:#f92672">:</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>		si<span style="color:#f92672">:</span> Stringer_Interface, 
+</span></span><span style="display:flex;"><span>		allocator <span style="color:#f92672">:=</span> <span style="color:#66d9ef">context</span>.allocator) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">string</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Book <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>new_stringer_book <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(b<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Book) <span style="color:#f92672">-&gt;</span> Stringer_Interface {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> Stringer_Interface {
+</span></span><span style="display:flex;"><span>		data <span style="color:#f92672">=</span> <span style="color:#66d9ef">rawptr</span>(b),
+</span></span><span style="display:flex;"><span>		sprint <span style="color:#f92672">=</span> <span style="color:#66d9ef">proc</span>(si<span style="color:#f92672">:</span> Stringer_Interface, 
+</span></span><span style="display:flex;"><span>                      allocator <span style="color:#f92672">:=</span> <span style="color:#66d9ef">context</span>.allocator) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">context</span>.allocator <span style="color:#f92672">=</span> allocator
+</span></span><span style="display:flex;"><span>			data <span style="color:#f92672">:=</span> <span style="color:#66d9ef">cast</span>(<span style="color:#f92672">^</span>Book)si.data
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> fmt.aprint(<span style="color:#e6db74">&#34;The name of the book is&#34;</span>, data.name)
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(si<span style="color:#f92672">:</span> Stringer_Interface) {
+</span></span><span style="display:flex;"><span>	str <span style="color:#f92672">:=</span> si<span style="color:#f92672">-&gt;</span>sprint()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">delete</span>(str)
+</span></span><span style="display:flex;"><span>	fmt.println(str)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() {
+</span></span><span style="display:flex;"><span>	odin_book <span style="color:#f92672">:=</span> Book {
+</span></span><span style="display:flex;"><span>		name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Odin book&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	stringer_book <span style="color:#f92672">:=</span> new_stringer_book(<span style="color:#f92672">&amp;</span>odin_book)
+</span></span><span style="display:flex;"><span>	print(stringer_book)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Also, this is how interfaces used in Odin&rsquo;s standard library.</p>
+<p>For example, <a href="https://github.com/odin-lang/Odin/blob/f047f804f67bd57713d058a0df6d83c49e0f3848/core/sort/sort.odin#L11">sort.Interface</a> in Odin is copied from Go using this type of interface structure.</p>
+<h4 id="do-it-like-in-java">Do it like in Java</h4>
+<p>Here is an example that looks like Java&rsquo;s abstract class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Shape_Abstract <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	width<span style="color:#f92672">:</span>    <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>	height<span style="color:#f92672">:</span>   <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>	get_area<span style="color:#f92672">:</span> <span style="color:#66d9ef">proc</span>(shape<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Shape_Abstract) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Penis <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">using</span> _<span style="color:#f92672">:</span> Shape_Abstract,
+</span></span><span style="display:flex;"><span>	name<span style="color:#f92672">:</span>    <span style="color:#66d9ef">string</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>new_penis <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>, width, height<span style="color:#f92672">:</span> <span style="color:#66d9ef">int</span>) <span style="color:#f92672">-&gt;</span> Penis {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> Penis {
+</span></span><span style="display:flex;"><span>		name <span style="color:#f92672">=</span> name,
+</span></span><span style="display:flex;"><span>		width <span style="color:#f92672">=</span> width,
+</span></span><span style="display:flex;"><span>		height <span style="color:#f92672">=</span> height,
+</span></span><span style="display:flex;"><span>		get_area <span style="color:#f92672">=</span> <span style="color:#66d9ef">proc</span>(shape<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Shape_Abstract) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>			data <span style="color:#f92672">:=</span> <span style="color:#66d9ef">cast</span>(<span style="color:#f92672">^</span>Penis)shape
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> data.width <span style="color:#f92672">*</span> data.height
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print_area <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(shape<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Shape_Abstract) {
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;Area:&#34;</span>, shape<span style="color:#f92672">-&gt;</span>get_area())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() {
+</span></span><span style="display:flex;"><span>	my_penis <span style="color:#f92672">:=</span> new_penis(<span style="color:#e6db74">&#34;mini me&#34;</span>, <span style="color:#a6e22e">5</span>, <span style="color:#a6e22e">23</span>)
+</span></span><span style="display:flex;"><span>	print_area(<span style="color:#f92672">&amp;</span>my_penis)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Also, you can&rsquo;t add more than one interface to a struct or you&rsquo;ll start getting weird shit or segmentation faults.
+So in the end, it also works like in java.</p>
+<h3 id="threads">Threads</h3>
+<p>Odin does not have goroutines or selectors because they need garbage collectors to work.</p>
+<p>However, I have written a complete example just for you on how to emulate goroutines and selectors in Odin.</p>
+<p>This example demonstrates the feeding process for baby birds from their parents.</p>
+<p>(You know the process. Mama bird throws up on the kids mouth to feed them. Isn’t nature beautiful?)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span><span style="color:#f92672">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:fmt&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:mem&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:strconv&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:sync&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:sync/chan&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:thread&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Parent_Enum <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	Father,
+</span></span><span style="display:flex;"><span>	Mother,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Food_From_Father <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	papa_index<span style="color:#f92672">:</span> <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Food_From_Mother <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	mama_index<span style="color:#f92672">:</span> <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Food <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> {
+</span></span><span style="display:flex;"><span>	Food_From_Father,
+</span></span><span style="display:flex;"><span>	Food_From_Mother,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>KidData <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	kids_wait_group<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>sync.Wait_Group,
+</span></span><span style="display:flex;"><span>	mouth<span style="color:#f92672">:</span>           <span style="color:#f92672">^</span>chan.Chan(Food, chan.Direction.Recv),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ParentData <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	parent_type<span style="color:#f92672">:</span>        Parent_Enum,
+</span></span><span style="display:flex;"><span>	num_foods<span style="color:#f92672">:</span>          <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>	parents_wait_group<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>sync.Wait_Group,
+</span></span><span style="display:flex;"><span>	mouth<span style="color:#f92672">:</span>              <span style="color:#f92672">^</span>chan.Chan(Food, chan.Direction.Send),
+</span></span><span style="display:flex;"><span>	mouth_mutex<span style="color:#f92672">:</span>        <span style="color:#f92672">^</span>sync.Mutex,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>parent_task <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(t<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>thread.Thread) {
+</span></span><span style="display:flex;"><span>	data <span style="color:#f92672">:=</span> (<span style="color:#66d9ef">cast</span>(<span style="color:#f92672">^</span>ParentData)t.data)
+</span></span><span style="display:flex;"><span>	fmt.println(data.parent_type, <span style="color:#e6db74">&#34;starts feeding&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">1</span> <span style="color:#f92672">..=</span> data.num_foods {
+</span></span><span style="display:flex;"><span>		food<span style="color:#f92672">:</span> Food
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> data.parent_type <span style="color:#f92672">==</span> .Mother {
+</span></span><span style="display:flex;"><span>			food <span style="color:#f92672">=</span> Food_From_Mother {
+</span></span><span style="display:flex;"><span>				mama_index <span style="color:#f92672">=</span> i,
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> data.parent_type <span style="color:#f92672">==</span> .Father {
+</span></span><span style="display:flex;"><span>			food <span style="color:#f92672">=</span> Food_From_Father {
+</span></span><span style="display:flex;"><span>				papa_index <span style="color:#f92672">=</span> i,
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// if you don&#39;t add mutex, then at least once, 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// a parent will send the same food index to two kids
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// while the other parent does not send any food
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// for the same food index (which I don&#39;t understand why)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		sync.mutex_lock(data.mouth_mutex)
+</span></span><span style="display:flex;"><span>		chan.send(data.mouth<span style="color:#f92672">^</span>, food)
+</span></span><span style="display:flex;"><span>		sync.mutex_unlock(data.mouth_mutex)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// wait to throw up new food
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		time.sleep(<span style="color:#a6e22e">500</span> <span style="color:#f92672">*</span> time.Millisecond)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	sync.wait_group_done(data.parents_wait_group)
+</span></span><span style="display:flex;"><span>	fmt.printfln(<span style="color:#e6db74">&#34;%v&#39;s feeding stopped&#34;</span>, data.parent_type)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kid_task <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(t<span style="color:#f92672">:</span> thread.Task) {
+</span></span><span style="display:flex;"><span>	data <span style="color:#f92672">:=</span> (<span style="color:#66d9ef">cast</span>(<span style="color:#f92672">^</span>KidData)t.data)
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;kid&#34;</span>, t.user_index, <span style="color:#e6db74">&#34;opens mouth&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		msg, ok <span style="color:#f92672">:=</span> chan.recv(data.mouth<span style="color:#f92672">^</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#960050;background-color:#1e0010">!</span>ok {
+</span></span><span style="display:flex;"><span>			fmt.println(<span style="color:#e6db74">&#34;mouth closed for kid&#34;</span>, t.user_index)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> food <span style="color:#66d9ef">in</span> msg {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Food_From_Father<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			fmt.println(<span style="color:#e6db74">&#34;kid&#34;</span>, t.user_index, 
+</span></span><span style="display:flex;"><span>              <span style="color:#e6db74">&#34;received food&#34;</span>, food.papa_index, 
+</span></span><span style="display:flex;"><span>              <span style="color:#e6db74">&#34;from father&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Food_From_Mother<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			fmt.println(<span style="color:#e6db74">&#34;kid&#34;</span>, t.user_index, 
+</span></span><span style="display:flex;"><span>              <span style="color:#e6db74">&#34;received food&#34;</span>, food.mama_index, 
+</span></span><span style="display:flex;"><span>              <span style="color:#e6db74">&#34;from mother&#34;</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// wait to chew their food
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		time.sleep(time.Second)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;kid&#34;</span>, t.user_index, <span style="color:#e6db74">&#34;finished eating&#34;</span>)
+</span></span><span style="display:flex;"><span>	sync.wait_group_done(data.kids_wait_group)
+</span></span><span style="display:flex;"><span>	fmt.printfln(<span style="color:#e6db74">&#34;kid %d went to bed&#34;</span>, t.user_index)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() {
+</span></span><span style="display:flex;"><span>	parents_wg<span style="color:#f92672">:</span> sync.Wait_Group
+</span></span><span style="display:flex;"><span>	kids_wg<span style="color:#f92672">:</span> sync.Wait_Group
+</span></span><span style="display:flex;"><span>	num_kids <span style="color:#f92672">:=</span> <span style="color:#a6e22e">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// create feeding pipe
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	mouth, err <span style="color:#f92672">:=</span> chan.create(chan.Chan(Food), <span style="color:#66d9ef">context</span>.allocator)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> chan.destroy(mouth)
+</span></span><span style="display:flex;"><span>	mouth_mutex <span style="color:#f92672">:=</span> sync.Mutex{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// create mama bird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	mama_mouth <span style="color:#f92672">:=</span> chan.as_send(mouth)
+</span></span><span style="display:flex;"><span>	mama_thread <span style="color:#f92672">:=</span> thread.create(parent_task)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> thread.destroy(mama_thread)
+</span></span><span style="display:flex;"><span>	mama_thread.init_context <span style="color:#f92672">=</span> <span style="color:#66d9ef">context</span>
+</span></span><span style="display:flex;"><span>	mama_thread.user_index <span style="color:#f92672">=</span> <span style="color:#a6e22e">1</span>
+</span></span><span style="display:flex;"><span>	mama_thread.data <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>ParentData {
+</span></span><span style="display:flex;"><span>		parent_type        <span style="color:#f92672">=</span> .Mother,
+</span></span><span style="display:flex;"><span>		num_foods          <span style="color:#f92672">=</span> <span style="color:#a6e22e">8</span>, <span style="color:#75715e">// with more food
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		parents_wait_group <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>parents_wg,
+</span></span><span style="display:flex;"><span>		mouth              <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>mama_mouth,
+</span></span><span style="display:flex;"><span>		mouth_mutex        <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>mouth_mutex,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// create lazy father bird
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	papa_mouth <span style="color:#f92672">:=</span> chan.as_send(mouth)
+</span></span><span style="display:flex;"><span>	papa_thread <span style="color:#f92672">:=</span> thread.create(parent_task)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> thread.destroy(papa_thread)
+</span></span><span style="display:flex;"><span>	papa_thread.init_context <span style="color:#f92672">=</span> <span style="color:#66d9ef">context</span>
+</span></span><span style="display:flex;"><span>	papa_thread.user_index <span style="color:#f92672">=</span> <span style="color:#a6e22e">2</span>
+</span></span><span style="display:flex;"><span>	papa_thread.data <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>ParentData {
+</span></span><span style="display:flex;"><span>		parent_type        <span style="color:#f92672">=</span> .Father,
+</span></span><span style="display:flex;"><span>		num_foods          <span style="color:#f92672">=</span> <span style="color:#a6e22e">6</span>, <span style="color:#75715e">// with less food
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		parents_wait_group <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>parents_wg,
+</span></span><span style="display:flex;"><span>		mouth              <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>papa_mouth,
+</span></span><span style="display:flex;"><span>		mouth_mutex        <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>mouth_mutex,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	sync.wait_group_add(<span style="color:#f92672">&amp;</span>parents_wg, <span style="color:#a6e22e">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	thread.start(mama_thread)
+</span></span><span style="display:flex;"><span>	thread.start(papa_thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// create a nest for kids
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	nest<span style="color:#f92672">:</span> thread.Pool
+</span></span><span style="display:flex;"><span>	thread.pool_init(<span style="color:#f92672">&amp;</span>nest, 
+</span></span><span style="display:flex;"><span>        allocator <span style="color:#f92672">=</span> <span style="color:#66d9ef">context</span>.allocator, 
+</span></span><span style="display:flex;"><span>        thread_count <span style="color:#f92672">=</span> num_kids)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> thread.pool_destroy(<span style="color:#f92672">&amp;</span>nest)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	sync.wait_group_add(<span style="color:#f92672">&amp;</span>kids_wg, num_kids)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">1</span> <span style="color:#f92672">..=</span> num_kids {
+</span></span><span style="display:flex;"><span>		kid_mouth <span style="color:#f92672">:=</span> chan.as_recv(mouth)
+</span></span><span style="display:flex;"><span>		data <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span>KidData{
+</span></span><span style="display:flex;"><span>            kids_wait_group <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>kids_wg, 
+</span></span><span style="display:flex;"><span>            mouth <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>kid_mouth
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// add kid to the nest
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		thread.pool_add_task(
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&amp;</span>nest,
+</span></span><span style="display:flex;"><span>			allocator <span style="color:#f92672">=</span> <span style="color:#66d9ef">context</span>.allocator,
+</span></span><span style="display:flex;"><span>			procedure <span style="color:#f92672">=</span> kid_task,
+</span></span><span style="display:flex;"><span>			data <span style="color:#f92672">=</span> <span style="color:#66d9ef">rawptr</span>(data),
+</span></span><span style="display:flex;"><span>			user_index <span style="color:#f92672">=</span> i,
+</span></span><span style="display:flex;"><span>		)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	thread.pool_start(<span style="color:#f92672">&amp;</span>nest)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// first we wait for parents to stop feeding kids
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	sync.wait_group_wait(<span style="color:#f92672">&amp;</span>parents_wg)
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;all parents stopped feeding them&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// everybody closes their mouths
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	chan.close(mouth)
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;kids close their mouths&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// we wait for all kids to sleep
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	sync.wait_group_wait(<span style="color:#f92672">&amp;</span>kids_wg)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;all kids slept&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// run this or else the program will never close
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	thread.pool_finish(<span style="color:#f92672">&amp;</span>nest)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you haven&rsquo;t figured out what is the selector and the goroutines in this example, then look at the union and threadpool.</p>
+<p>One channel that accepts the union type message is equivalent to using two channels and a selector in Golang because each individual type in the union is equivalent to a channel in a selector. The union emulates the selector.</p>
+<p>The threadpool is equivalent to Golang&rsquo;s runtime because it runs the threads in a head of time that will be used later on to run the goroutines.</p>
+<p>Just remember your university&rsquo;s Java course on concurrency, use threads for long-running tasks, threadpools for small tasks and paracetamol for deadlocks.</p>
+<h2 id="in-conclusion">In conclusion</h2>
+<p>With this article, I hope now you understand Odin&rsquo;s potential for the future and as a Golang&rsquo;s replacement for backend development.</p>
+<p>By the way, if you read <a href="https://github.com/odin-lang/Odin/blob/master/examples/demo/demo.odin">demo.odin</a> and my explanations without skipping anything, then from now on you are a Senior Odin Developer. (ooops!)</p>
+<p>Congratulations!</p>
+<p>To be a Grandmaster Odin Developer, just scroll <a href="https://odin-lang.org/docs/overview">overview</a> and <a href="https://odin-lang.org/news/binding-to-c/">how to bind to C</a></p>
+
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/1-my-first-post/">
+                        Hello
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+    
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
