@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://rm4n0s.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://rm4n0s.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://rm4n0s.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://rm4n0s.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rm4n0s.github.io//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+<title>
+    
+    Error Handling Challenge! | (a)RManos Blog
+    
+</title>
+
+<link rel="canonical" href="https://rm4n0s.github.io/posts/3-error-handling-challenge/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">(a)RManos Blog</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/3-error-handling-challenge/">Error Handling Challenge!</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Error Handling Challenge!</h1>
+    
+    <p class="single-summary">If you fail this challenge, then your favourite programming language sucks</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-10-31T00:00:00&#43;00:00">October 31, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      5 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#the-challenge">The challenge</a></li>
+    <li><a href="#odins-holy-teachings">Odin&rsquo;s holy teachings</a></li>
+    <li><a href="#odins-teachings-in-action">Odin&rsquo;s teachings in action</a></li>
+    <li><a href="#developers-rights">Developers&rsquo; rights</a></li>
+    <li><a href="#odin-is-the-evolution">Odin is the evolution</a></li>
+    <li><a href="#start-the-revolution">Start the revolution</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <p>(DISCLAIMER: the article may topple a benevolent dictator)</p>
+<h2 id="introduction">Introduction</h2>
+<p><a href="https://rm4n0s.github.io/posts/2-go-devs-should-learn-odin/#error-handling">In the previous article,</a>
+I compared Golang’s and Odin’s error handling, and I said why Go’s error types suck.</p>
+<p>However, some Golang developers told me that it is possible to do the same things with errors.Is(), errors.As(), fmt.Errorf() or other library.</p>
+<p>At that point, I realized that these developers didn’t understand the problem and for that reason, I made it as an exercise for them to solve.</p>
+<p>Nevertheless, this exercise it is not only for Golang developers, but for all the developers. Everybody has the chance to prove that their favorite programming language is better than Odin&rsquo;s superior error handling.</p>
+<p>I challenge you ALL to the “Error Handling Challenge!”</p>
+<h2 id="the-challenge">The challenge</h2>
+<p>The challenge is simple to understand. Print a message to the user based on the path of function calls that produced the error, and not based on the error itself.</p>
+<p>The exercise is in Golang, and it has in comments the requirements to complete the task.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;errors&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;math/rand/v2&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ErrBankAccountEmpty</span> = <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;account-is-empty&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ErrInvestmentLost</span> = <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;investment-lost&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f1</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">IntN</span>(<span style="color:#ae81ff">9</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span><span style="color:#f92672">%</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrBankAccountEmpty</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrInvestmentLost</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f2</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f1</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f3</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f1</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f4</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">IntN</span>(<span style="color:#ae81ff">9</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span><span style="color:#f92672">%</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f2</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f3</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f4</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// print three different messages based on 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the execution path of the functions and error:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// - for f4()-&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//			f2()-&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//				f1()-&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//					 ErrBankAccountEmpty
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//					  print &#34;Aand it&#39;s gone&#34; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// - for f4()-&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//			f3()-&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//				f1()-&gt; 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//					ErrInvestmentLost
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//					 print &#34;The money in your account didn&#39;t do well&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//						
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// - for the rest of the cases 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//			print &#34;This line is for bank members only&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// also print any type of stack trace for err
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Print stack trace&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Please don’t change the logic, the number of functions and the messages.</p>
+<p>However, you can change the types of errors, add more return values, global values and use any library you want.</p>
+<p>Furthermore, you can rewrite this exercise in any programming language you want, as long as you keep the logic the same. If your programming language is OOP, then use static methods in the same object.</p>
+<p>Yet, before you start solving it, I want you to know that I believe no language can solve this challenge except Odin.</p>
+<p>Because Odin it is not just a programming language, it is a holy teacher.</p>
+<h2 id="odins-holy-teachings">Odin&rsquo;s holy teachings</h2>
+<p>To solve this task in Odin, you have to follow the unwritten verses from Odin&rsquo;s source code:</p>
+<ul>
+<li>Use Enum, Union and Struct for errors, no strings or other types of pointers</li>
+<li>Define a type as an error by adding &ldquo;_Error&rdquo; at the end of the name.</li>
+<li>Give one or more error types for each procedure no matter the race, sex, religion and political beliefs</li>
+<li>If a procedure does not produce its own errors, then unionize the errors from the functions it calls.</li>
+<li>To create messages for users, parse the errors with switch/case, if conditions or &ldquo;core:reflect&rdquo; library.</li>
+<li>Replace stack traces with type traces.</li>
+</ul>
+<h2 id="odins-teachings-in-action">Odin&rsquo;s teachings in action</h2>
+<p>Here I solve the above exercise in Odin, using the holy verses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span><span style="color:#f92672">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:fmt&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;core:math/rand&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// my library for type traces
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// https://github.com/rm4n0s/trace
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;trace&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F1_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	Account_Is_Empty,
+</span></span><span style="display:flex;"><span>	Investment_Lost,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F2_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>	F1_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F3_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>	F1_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>F4_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>	F2_Error,
+</span></span><span style="display:flex;"><span>	F3_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f1 <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() <span style="color:#f92672">-&gt;</span> F1_Error {
+</span></span><span style="display:flex;"><span>	n <span style="color:#f92672">:=</span> rand.int_max(<span style="color:#a6e22e">9</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> n <span style="color:#f92672">%</span> <span style="color:#a6e22e">2</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> .Account_Is_Empty
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> .Investment_Lost
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f2 <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() <span style="color:#f92672">-&gt;</span> F2_Error {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> f1()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f3 <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() <span style="color:#f92672">-&gt;</span> F3_Error {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> f1()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f4 <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() <span style="color:#f92672">-&gt;</span> F4_Error {
+</span></span><span style="display:flex;"><span>	n <span style="color:#f92672">:=</span> rand.int_max(<span style="color:#a6e22e">9</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> n <span style="color:#f92672">%</span> <span style="color:#a6e22e">2</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> f2()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> f3()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>() {
+</span></span><span style="display:flex;"><span>	err <span style="color:#f92672">:=</span> f4()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> err4 <span style="color:#66d9ef">in</span> err {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> F2_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> err2 <span style="color:#66d9ef">in</span> err4 {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> F1_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> err2 {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Account_Is_Empty<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				fmt.println(<span style="color:#e6db74">&#34;Aand it&#39;s gone&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				fmt.println(<span style="color:#e6db74">&#34;This line is for bank members only&#34;</span>)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> F3_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> err3 <span style="color:#66d9ef">in</span> err4 {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> F1_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> err3 {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Investment_Lost<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				fmt.println(<span style="color:#e6db74">&#34;The money in your account didn&#39;t do well&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				fmt.println(<span style="color:#e6db74">&#34;This line is for bank members only&#34;</span>)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	tr <span style="color:#f92672">:=</span> trace.trace(err)
+</span></span><span style="display:flex;"><span>	fmt.println(<span style="color:#e6db74">&#34;Trace:&#34;</span>, tr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Prints randomly:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Aand it&#39;s gone
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Trace: F4_Error -&gt; F2_Error -&gt; F1_Error.Account_Is_Empty
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    The money in your account didn&#39;t do well
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Trace: F4_Error -&gt; F3_Error -&gt; F1_Error.Investment_Lost
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    This line is for bank members only
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Trace: F4_Error -&gt; F3_Error -&gt; F1_Error.Account_Is_Empty
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, Odin&rsquo;s holy teachings not only solve difficult challenges, but also it supports developers&rsquo; rights.</p>
+<p>But let me guess, you don&rsquo;t even know your rights and for that reason, you let your favorite programming language treat you horrible.</p>
+<p>I will educate you, my brothers and sisters, about your rights.</p>
+<h2 id="developers-rights">Developers&rsquo; rights</h2>
+<ul>
+<li>To read the errors of a function without reading the function&rsquo;s code.
+<ul>
+<li>Spent your time in thinking, not searching.</li>
+</ul>
+</li>
+<li>To print a stack trace for each error.
+<ul>
+<li>The way is more important than the destination.</li>
+</ul>
+</li>
+<li>To create error messages for users from parsing the trace of functions that produced the error.
+<ul>
+<li>DON&rsquo;T use the same language for users, administrators, and developers.</li>
+</ul>
+</li>
+</ul>
+<p>No programming language can give us all the rights, except Odin.</p>
+<h2 id="odin-is-the-evolution">Odin is the evolution</h2>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /lang-evolution.jpg">
+    </div>
+
+    
+</figure></p>
+<h2 id="start-the-revolution">Start the revolution</h2>
+<p>If you feel woke now and ready to protest for your rights, here is a list of chants:</p>
+<ul>
+<li>In Union there is strength, for errors to transcend</li>
+<li>We want non-binary errors, no more exception terrors</li>
+<li>Errors unite! in a union type!</li>
+<li>Two, Four, Six, Eight! How Do You Know Your Errors Are Traced?</li>
+<li>Who’s got the power? We’ve got the power!
+What kind of power? Union power!</li>
+<li>Get up, get down, Odin is a union town!</li>
+<li>We don&rsquo;t want exceptions, we want union inceptions!</li>
+<li>Developers rights are human rights!</li>
+</ul>
+
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/2-go-devs-should-learn-odin/">
+                        Golang developers should try Odin
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+    
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
