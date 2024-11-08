@@ -18,7 +18,7 @@
 
 <title>
     
-    Lookmaxxing Gremlins with Odin | (a)RManos Blog
+    Looksmaxxing Gremlins with Odin | (a)RManos Blog
     
 </title>
 
@@ -108,7 +108,7 @@
     <a href="/posts/">Posts</a>
     <span class="breadcrumbs-separator"> > </span>
     
-    <a class="breadcrumbs-current" href="/posts/4-lookmaxxing-gremlins/">Lookmaxxing Gremlins with Odin</a>
+    <a class="breadcrumbs-current" href="/posts/4-lookmaxxing-gremlins/">Looksmaxxing Gremlins with Odin</a>
 </div>
 
 
@@ -119,7 +119,7 @@
 
     
 
-    <h1 class="single-title">Lookmaxxing Gremlins with Odin</h1>
+    <h1 class="single-title">Looksmaxxing Gremlins with Odin</h1>
     
     <p class="single-summary">How to create complete bindings in minutes for every C library</p>
     
@@ -238,7 +238,7 @@ Aborted (core dumped)
 <p>In my dream, Trump showed up at an Odin conference ranting, &ldquo;We will deport all the macros, and we will build the biggest header file on earth. Who will pay for the header file? Yes! GCC will pay for the header file!&rdquo;</p>
 <h2 id="trump-runic">Trump Runic</h2>
 <p>Trump was right! Runic cannot generate bindings successfully because macros sabotage its work.</p>
-<p>So we can make GCC to preprocess Libuv header file and create a new header file with no macro.</p>
+<p>For that reason, we will make GCC to deport all the macros from Libuv header file and create a large new header file with everything inside for Runic to parse.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc -E /usr/include/uv.h &gt; uv-preprocessed.h
 </span></span></code></pre></div><p>The new header file contains all the types and functions used by Libuv, even the ones from other libraries but used in the Libuv..</p>
 <p>Now lets update the Runic configuration file to generate bindings from the preprocessed header file in the &ldquo;uv-preprocessed&rdquo; folder.</p>
