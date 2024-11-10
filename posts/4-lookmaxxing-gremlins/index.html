@@ -135,7 +135,7 @@
 
       
       &nbsp; · &nbsp;
-      6 min read
+      7 min read
       
     </p>
 
@@ -322,6 +322,13 @@ uv.odin(1470:21) Error: Undeclared name: uv_getnameinfo_s
 <li>The three dots in C equals to &lsquo;#c_vararg args: ..any&rsquo;. You need to remember that because Runic doesn&rsquo;t translate &lsquo;&hellip;&rsquo; to Odin.</li>
 <li>The va_list exists in the core:c library</li>
 <li>Runic will not translate inline and macro functions to Odin</li>
+<li>Runic translates all &ldquo;char *&rdquo; to &ldquo;cstring&rdquo; but &ldquo;cstring&rdquo; means &ldquo;char const *&rdquo;</li>
+<li>&ldquo;char *&rdquo; is [^]byte and [^]u8
+<ul>
+<li>use make() to allocate [^]byte but free() or delete(buf[:size]) to deallocate it</li>
+</ul>
+</li>
+<li>memcpy(dst, src, size) translates to copy(dst[:size], src[:size])</li>
 </ul>
 <h2 id="the-face-of-bindings">The face of bindings</h2>
 <p>Now, you may wonder &hellip; how the C library looks like through Odin bindings? Click to see the face of our bindings.
