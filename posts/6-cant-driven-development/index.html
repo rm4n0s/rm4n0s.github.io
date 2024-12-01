@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://rm4n0s.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://rm4n0s.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://rm4n0s.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://rm4n0s.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rm4n0s.github.io//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+<title>
+    
+    Can&#39;t Driven Development | (a)RManos Blog
+    
+</title>
+
+<link rel="canonical" href="https://rm4n0s.github.io/posts/6-cant-driven-development/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">(a)RManos Blog</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/6-cant-driven-development/">Can&#39;t Driven Development</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Can&#39;t Driven Development</h1>
+    
+    <p class="single-summary">The best way to architect, test and develop software</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-12-01T00:00:00&#43;00:00">December 1, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      13 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-we-need-a-new-methodology">Why we need a new methodology</a></li>
+    <li><a href="#the-interview-exercise">The interview exercise</a></li>
+    <li><a href="#current-methodologies">Current methodologies</a>
+      <ul>
+        <li><a href="#tdd">TDD</a></li>
+        <li><a href="#ddd">DDD</a></li>
+      </ul>
+    </li>
+    <li><a href="#cdd">CDD</a></li>
+    <li><a href="#cdd-rules">CDD rules</a>
+      <ul>
+        <li><a href="#list-all-the-cant-statements">List all the &ldquo;Can&rsquo;t&rdquo; statements</a></li>
+        <li><a href="#translate-cant-statements-to-code">Translate &ldquo;Can&rsquo;t&rdquo; statements to code</a></li>
+      </ul>
+    </li>
+    <li><a href="#cdd-in-practice">CDD in practice</a>
+      <ul>
+        <li><a href="#list-cant-statements">List &ldquo;Can&rsquo;t&rdquo; statements</a></li>
+        <li><a href="#translate-cant-statements-to-code-1">Translate &ldquo;Can&rsquo;t&rdquo; statements to code</a></li>
+        <li><a href="#structure-the-code">Structure the code</a></li>
+        <li><a href="#tdd-on-cdd">TDD on CDD</a></li>
+      </ul>
+    </li>
+    <li><a href="#in-conclusion">In conclusion</a></li>
+    <li><a href="#a-christmas-wish">A Christmas Wish</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <p>Do you find it challenging to design a new software project?</p>
+<p>Is it difficult to know from where to start your project?</p>
+<p>Do you find current methodologies overcomplicated and slow?</p>
+<p>Do you want to bring back the good old days of monolithic and waterfall model without the technical debts and legacy code?</p>
+<p>Then this article is for you.</p>
+<p>In my previous article, I mentioned that in Odin <a href="https://rm4n0s.github.io/posts/5-it-will-take-your-job/#odin-will-map-the-software-for-you">you can architect your software</a>, but I didn&rsquo;t go in details on how to use it in real life.
+For that reason, this article will introduce you to a new methodology that will give you a step-by-step guide.</p>
+<p>This new methodology</p>
+<ul>
+<li>will be easy to learn</li>
+<li>will help you to devise fast</li>
+<li>will make your software modular</li>
+<li>will make your code bug-free</li>
+<li>will make technical debts and legacy code to disappear</li>
+<li>will make daily meetings disappear.</li>
+</ul>
+<p>Because I am to blame for discovering this new methodology, I will call it “Can&rsquo;t Driven Development” or CDD for short.</p>
+<p>Unfortunately, this only works for programming languages that have Enum and Union types for errors, like Odin.</p>
+<p>I promise this time I will not bash your favorite programming language.</p>
+<details>
+    <summary>I really promise</summary>
+    <figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /images/6/i-promise.jpg">
+    </div>
+
+    
+</figure>
+</details>
+<h2 id="why-we-need-a-new-methodology">Why we need a new methodology</h2>
+<p>We live in a different era than we did 25 years ago.
+For example, 25 years ago, burnout wasn&rsquo;t even a thing for developers and job posts requested to know only one programming language, but today is the total opposite.</p>
+<p>People back then had the energy and money to waste on slow paced methodologies. However, we continue to use these methodologies in today&rsquo;s fast-paced and stingy market.</p>
+<p>Even though “agile” invented to decrease the time we develop the software, but in reality it gives the illusion that is fast. It is an illusion because it gives an incomplete product to the customer with the excuse to iterate over it every week,  and that iteration never ends.</p>
+<p>And Agile moved our industry from Monolithic to Microservices and created a world where developers expected to know multiple programming languages and services. We have come to the point where companies expect only full-stack or DevOps and nothing else.</p>
+<p>The agile movement made developers to spend multiple hours indoors and destroy their social life, just to learn all these technologies.
+No wonder we have a pandemic of burnouts in IT.</p>
+<p>But the worst part is that this pandemic destroys open source. More and more open-source developers giving up because of the destruction of their social lives over the years. A good example of the results of that is XZ project.</p>
+<p>To save this industry, we need to reduce the knowledge for developers, and I believe only Odin and CDD can do that. With this new methodology, you will be able to control every aspect of the software&rsquo;s development with only one programming language.</p>
+<p>In the next chapters, I will start explaining about CDD through a real life example.</p>
+<h2 id="the-interview-exercise">The interview exercise</h2>
+<p>Let&rsquo;s assume you signed up for an interview and the company sent you an exercise to finish in the next 8 hours.</p>
+<p>For the exercise, the company wants a REST-API method to greet new friends, but it also wants to block annoying people.</p>
+<p>The HTTP method is GET /hello/<!-- raw HTML omitted --> and it will have three types of responses:</p>
+<ul>
+<li>If the person calls the REST-API method for the first time, then the REST-API will respond &ldquo;Hello, nice to meet you <!-- raw HTML omitted -->&rdquo;</li>
+<li>If the person calls the REST-API method for the second time, but after 60 seconds, then the method will respond &ldquo;Hello my friend&rdquo;</li>
+<li>If the person calls the REST-API method repeatedly without waiting 60 seconds, then the method  will respond with &ldquo;Get away from me&rdquo;</li>
+</ul>
+<p>Also, we can&rsquo;t communicate with the company to get additional information, and we have to work on this as fast as possible.</p>
+<h2 id="current-methodologies">Current methodologies</h2>
+<p>Before start implementing the above exercise with CDD, let&rsquo;s first explain how current methodologies can fail you.</p>
+<h3 id="tdd">TDD</h3>
+<p>The main idea of TDD is to design the software through tests. The developer starts coding without thinking about how to organize the code from the start, but rather from passing tests and refactoring code.
+This means that the developer discovers the constraints of the software through the tests and assertions, which is also the problem.</p>
+<p>It is like putting clothes in a bag, one by one, until you figure out when it is full. Then, when it is full, you take out all the clothes from the bag to organize them before putting them back again in the bag. Nobody does that in real life and for that reason, TDD is considered slow.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /images/6/sloth.jpg">
+    </div>
+
+    
+</figure></p>
+<h3 id="ddd">DDD</h3>
+<p>Domain-Driven Design is a methodology to model source code closer to the domain of the problem.
+This approach developed to utilize the OOP features of the current programming languages. The purpose is to create a readable code that even non-developers could understand the intention of the code.
+However, that is the main issue of DDD. Developers have different views on how the domain should be represented in the code, making the code unreadable.
+Even DDD itself is so complicated that the author couldn&rsquo;t explain it in less than 600 pages.</p>
+<p>For our exercise, the DDD specialist will pause for hours over the board thinking existential questions like “Is the responder a class or an interface?”, “Is greeting a command or query?”, “When do I aggregate again?” &hellip; “who am I?”.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /images/6/ddd.jpg">
+    </div>
+
+    
+</figure></p>
+<h2 id="cdd">CDD</h2>
+<p>CDD is a new methodology that came to my mind accidentally when I realized that errors with Union types can model the most important aspects of the software.</p>
+<p>It is like how Tao&rsquo;s philosophy looks at objects, where it sees the design of objects through their empty spaces.
+For example, the space inside a cup makes it useful for a programmer to pour coffee in.
+However, in our case, the empty spaces in the software are defined by its limitation and constraints that throw errors.
+
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /images/6/lao-tzu.jpg">
+    </div>
+
+    
+</figure></p>
+<p>To find the errors of the software you architect, then you have to ask yourself first what it “can&rsquo;t” do, hence the name “Can&rsquo;t Driven Development”.</p>
+<p>The reason we start with “Can&rsquo;t” and not “Can”, is because the “Can” is already defined in the customer&rsquo;s request which is usually only one thing, for example in our case, adding new friends.</p>
+<p>Our software can be explained like this, “It lets you do X, but you can&rsquo;t do Y when Z, and it can&rsquo;t do V”</p>
+<p>By defining “Can&rsquo;t” statements, we can really differentiate apps that do the same thing.</p>
+<p>For example, what is the name of the app that lets you post text, but you can&rsquo;t write over 280 characters?
+If you said X, then you are right and, thanks to that “Can&rsquo;t” statement, separates it from Mastodon and Threads.</p>
+<p>Most importantly, by defining the “can&rsquo;t” statements first, we bullet-proof our software from any undefined or unexpected bugs that our users or testers would find accidentally. Everything will be defined, and you will not need to slow your software with logs.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Image alt" src=" /images/6/odama.jpg">
+    </div>
+
+    
+</figure></p>
+<p>But let me repeat that CDD to work, you have to use Odin and some rules to follow.</p>
+<h2 id="cdd-rules">CDD rules</h2>
+<h3 id="list-all-the-cant-statements">List all the &ldquo;Can&rsquo;t&rdquo; statements</h3>
+<p>First we need to define the “Can&rsquo;t” statements following these steps:</p>
+<ol>
+<li>define if a use case does exactly one thing. If it doesn&rsquo;t, then it contains “Can&rsquo;t” statements.</li>
+<li>actions that return negative results are “Can&rsquo;t” statements. Negative results are the ones that contain “Not” in their explanation.</li>
+<li>if an action uses resources, then for these resources, you need to create “Can&rsquo;t” statements to handle predefined limitations.</li>
+</ol>
+<h3 id="translate-cant-statements-to-code">Translate &ldquo;Can&rsquo;t&rdquo; statements to code</h3>
+<p>After defining the &ldquo;can&rsquo;t&rdquo; statements, you have to write them down as error types in Odin. Before you start coding the error types, make sure you have read <a href="http://rm4n0s.github.io/posts/3-error-handling-challenge/#odins-holy-teachings">on how to structure errors with Odin</a>.</p>
+<p>Here is the list of rules that you have to follow to architect your code and start developing</p>
+<ol>
+<li>to find what functions we have to create, first we have to transform our “can&rsquo;t” statements to errors and split them into functions based on a set of problems in the same domain. To achieve that, we need to refactor our error types in iterations, until the mental model is complete.
+<ul>
+<li>first, take all the “can&rsquo;t” statements and make them errors in an Enum for the main function.</li>
+<li>for the second iteration, split the errors in their own Enums based on common subject, and transform the main Enum to a Union type that contains all the newly created Enums</li>
+<li>repeat the above rules for all the newly created Enum types until all “can&rsquo;t” statements are in their set of domains.</li>
+</ul>
+</li>
+<li>define the order of errors in the types based on the order of calls in the functions.</li>
+<li>create the functions for the error types
+<ul>
+<li>make sure they take all of their inputs from the parameters, and they don&rsquo;t use any global variable.</li>
+<li>you can create functions that don&rsquo;t return any error type to reduce the code length of your main functions</li>
+</ul>
+</li>
+<li>lock the errors with switch statements in tests</li>
+<li>start developing your software with TDD.
+<ul>
+<li>first create tests that assert stack traces and later work on the main use case.</li>
+</ul>
+</li>
+</ol>
+<h2 id="cdd-in-practice">CDD in practice</h2>
+<p>Now it is time to take all the rules and put them into practice. We will solve the exercise in the CDD way.</p>
+<h3 id="list-cant-statements">List &ldquo;Can&rsquo;t&rdquo; statements</h3>
+<p>Let&rsquo;s use each rule one by one for this exercise.</p>
+<ul>
+<li>
+<p>the current exercise requires for the software to return three types of responses, so it does not do one thing.</p>
+</li>
+<li>
+<p>For our current exercise, we have two negative results. The first when the name is NOT in the friends or spammers lists, and the second is when the name is NOT friendly.</p>
+</li>
+<li>
+<p>The resource we will use for saving lists is RAM, and it is limited. However, because everyone has different hardware, the limitations will be configurable.</p>
+</li>
+</ul>
+<p>So here is the list of “can&rsquo;t” statements:</p>
+<ul>
+<li>If the service can&rsquo;t find the name from the list of friends or spammers, then return an error and add the name to the list of friends</li>
+<li>The service can&rsquo;t respond positively to spammers.</li>
+<li>If a name in the friend&rsquo;s list starts to spam the service, then it can&rsquo;t be in the friends list anymore.</li>
+<li>The service can&rsquo;t accept new names when it reaches specified limits for friends or spammers.</li>
+<li>The service can&rsquo;t accept names over a specific length.</li>
+</ul>
+<h3 id="translate-cant-statements-to-code-1">Translate &ldquo;Can&rsquo;t&rdquo; statements to code</h3>
+<p>Lets call our main function &ldquo;hello_from&rdquo; with an error type Hello_From_Error.</p>
+<p>For starters, we create Hello_From_Error as an Enum that contains all the &ldquo;Can&rsquo;t&rdquo; statements as errors.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Hello_From_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>    New_Spammer, <span style="color:#75715e">// a friendly name that just moved to spammers list
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	Unknown, <span style="color:#75715e">// a name that was not found in any list
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	Spammer, <span style="color:#75715e">// a name that found in the spammer&#39;s list
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	Name_To_Long, <span style="color:#75715e">// the name was to long
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	Not_Enough_Space, <span style="color:#75715e">// there is not enough space in the lists
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>Looking at the errors, we can split them into two sets of problems. The first is about verifying the string of the name itself, and the second is about verifying the name based on the lists. They are different set of problems because they verify on different data structures.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Verify_Name_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	Name_To_Long,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Verify_Friend_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>    New_Spammer,
+</span></span><span style="display:flex;"><span>	Spammer,
+</span></span><span style="display:flex;"><span>	Unknown,
+</span></span><span style="display:flex;"><span>    Not_Enough_Space,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hello_From_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> {
+</span></span><span style="display:flex;"><span>	Verify_Name_Error,
+</span></span><span style="display:flex;"><span>	Verify_Friend_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>For the last iteration, we split the errors for verifying friends into two domains, the one that checks the lists and the other that adds the names to the lists.
+They are two different domains because they are two different actions on the same lists.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Verify_Name_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	Name_To_Long,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Check_Name_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	New_Spammer,
+</span></span><span style="display:flex;"><span>	Spammer,
+</span></span><span style="display:flex;"><span>	Unknown,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Add_Friend_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	Not_Enough_Space,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Add_Spammer_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+</span></span><span style="display:flex;"><span>	None,
+</span></span><span style="display:flex;"><span>	Not_Enough_Space,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Verify_Friend_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>	Check_Name_Error,
+</span></span><span style="display:flex;"><span>	Add_Friend_Error,
+</span></span><span style="display:flex;"><span>	Add_Spammer_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hello_From_Error <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> <span style="color:#a6e22e">#shared_nil</span> {
+</span></span><span style="display:flex;"><span>	Verify_Name_Error,
+</span></span><span style="display:flex;"><span>	Verify_Friend_Error,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Maybe you have different opinion on how the errors should be organized, but my advice is to name errors based on “can&rsquo;t” statements and separate them based on data structures and actions</p>
+<p>The most important part of this structure is the mental model it creates.
+We started from the error type of the main procedure, and we were able to create the rest of the procedures, like a domino effect, thanks to CDD rules.</p>
+<p>Here you can see the diagram of the software, thanks to the errors types.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="diagram" src=" /images/6/diagram.jpg">
+    </div>
+
+    
+</figure></p>
+<p>For that reason, I insist saying &ldquo;the errors define your software&rdquo;</p>
+<h3 id="structure-the-code">Structure the code</h3>
+<p>Now it is time to structure the code for development.</p>
+<p>First, let&rsquo;s create the Struct that will contain the list of friends and spammers. I used Hashmap because it is simpler to use.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Storage <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	friends<span style="color:#f92672">:</span>          <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]time.Time,
+</span></span><span style="display:flex;"><span>	spammers<span style="color:#f92672">:</span>         <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>	friends_rwmutex<span style="color:#f92672">:</span>  <span style="color:#f92672">^</span>sync.RW_Mutex,
+</span></span><span style="display:flex;"><span>	spammers_rwmutex<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>sync.RW_Mutex,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Secondly, we will need another one to save configurable variables like the limitations on resources.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>Options <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// allowed length of a name
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	name_len<span style="color:#f92672">:</span>                   <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// allowed limit of friends 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	friends_len<span style="color:#f92672">:</span>                <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// allowed limit of spammers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	spammers_len<span style="color:#f92672">:</span>               <span style="color:#66d9ef">int</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// how many seconds to wait between requests
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	friend_until_repeat_in_sec<span style="color:#f92672">:</span> <span style="color:#66d9ef">f64</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And we create each procedure for each error type using the above Structs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>hello_from <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    storage<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Storage,
+</span></span><span style="display:flex;"><span>	opts<span style="color:#f92672">:</span> Options, name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>,
+</span></span><span style="display:flex;"><span>) <span style="color:#f92672">-&gt;</span> (<span style="color:#66d9ef">string</span>, Hello_From_Error) { 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>verify_name <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    opts<span style="color:#f92672">:</span> Options, 
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">-&gt;</span> Verify_Name_Error {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> .None
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>verify_friend <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    storage<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Storage, 
+</span></span><span style="display:flex;"><span>    opts<span style="color:#f92672">:</span> Options, 
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">-&gt;</span> Verify_Friend_Error {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> .None
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check_name <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    storage<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Storage, 
+</span></span><span style="display:flex;"><span>    opts<span style="color:#f92672">:</span> Options, 
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">-&gt;</span> Check_Name_Error {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> .None
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>add_friend <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    storage<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Storage, 
+</span></span><span style="display:flex;"><span>    opts<span style="color:#f92672">:</span> Options, 
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">-&gt;</span> Add_Friend_Error {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> .None
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>add_spammer <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(
+</span></span><span style="display:flex;"><span>    storage<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>Storage, 
+</span></span><span style="display:flex;"><span>    opts<span style="color:#f92672">:</span> Options, 
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">-&gt;</span> Add_Spammer_Error {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> .None
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>However, if you want to reduce the code inside procedures, then you can create new procedures that return only values and no errors. If the newly created procedures return errors, then you have to go back to the board and iterate over “can&rsquo;t” statements.</p>
+<p>Do you see how fast we structured the software? Now we can push it to a junior developer to finish it.
+We can even make sure that the junior developer will not break our architecture with this test to make the compiler warn us for any breaks.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span><span style="color:#a6e22e">@(test)</span>
+</span></span><span style="display:flex;"><span>lock_architecture <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(_<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>testing.T) {
+</span></span><span style="display:flex;"><span>	_, helloErr <span style="color:#f92672">:=</span> hello_from(storage, options, <span style="color:#e6db74">&#34;manos&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> err <span style="color:#66d9ef">in</span> helloErr {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> Verify_Name_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> err {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> .Name_To_Long<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> .None<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> Verify_Friend_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> errFriend <span style="color:#66d9ef">in</span> err {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Check_Name_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">switch</span> errFriend {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .None<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .New_Spammer<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Spammer<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Unknown<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Add_Friend_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">switch</span> errFriend {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .None<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Not_Enough_Space<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Add_Spammer_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">switch</span> errFriend {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .None<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Not_Enough_Space<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="tdd-on-cdd">TDD on CDD</h3>
+<p>To implement the procedures, it is a good idea to use TDD. This time, TDD is faster because thanks to CDD we can test the most important parts of the software, which are the errors and stack traces.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span><span style="color:#a6e22e">@(test)</span>
+</span></span><span style="display:flex;"><span>test_hello_from <span style="color:#f92672">::</span> <span style="color:#66d9ef">proc</span>(_<span style="color:#f92672">:</span> <span style="color:#f92672">^</span>testing.T) {
+</span></span><span style="display:flex;"><span>    manosHello, manosErr <span style="color:#f92672">:=</span> hello_from(storage, options, <span style="color:#e6db74">&#34;manos&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert(manosHello <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Hello, nice to meet you manos&#34;</span>)
+</span></span><span style="display:flex;"><span>	passedUnknownStackTrace <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> friendError <span style="color:#66d9ef">in</span> manosErr {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> Verify_Friend_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> checkErr <span style="color:#66d9ef">in</span> friendError {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> Check_Name_Error<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> checkErr {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">case</span> .Unknown<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>				passedUnknownStackTrace <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	assert(passedUnknownStackTrace)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Moreover, you will realize that we don&rsquo;t need to waste time on refactoring as the structure is already prepared and by testing stack traces you do meaningful code coverage.</p>
+<p>That is all on what I had to teach you on CDD.
+If you want to see the rest of the source code, then visit <a href="https://github.com/rm4n0s/hello_from">https://github.com/rm4n0s/hello_from</a></p>
+<h2 id="in-conclusion">In conclusion</h2>
+<p>Parsing union trees, started as a hack in Odin, but I believe it will change how we develop software from now on because we can represent stack traces as union trees.</p>
+<p>Like steam engines that started as a hack but soon enough changed the economy from feudalism to capitalism.</p>
+<p>The same way, I believe that we will go from:</p>
+<ul>
+<li>Agile to Waterfall model</li>
+<li>Microservices to Monolithic</li>
+<li>DevOps to Developers</li>
+<li>Meetings to Forums</li>
+<li>Offices to Homes</li>
+<li>worried about system updates to pushing updates on Fridays</li>
+<li>legacy code, to code that does not let accidents happen from juniors.</li>
+</ul>
+<p>All thanks to Odin and me for inventing CDD.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="diagram" src=" /images/6/engine.jpg">
+    </div>
+
+    
+</figure></p>
+<h2 id="a-christmas-wish">A Christmas Wish</h2>
+<p>I hope this syntactic sugar added in the #partial switch statement</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-odin" data-lang="odin"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">#partial</span> <span style="color:#66d9ef">switch</span> err <span style="color:#66d9ef">in</span> Union4 {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Union3<span style="color:#f92672">-&gt;</span>Union2<span style="color:#f92672">-&gt;</span>Union1<span style="color:#f92672">-&gt;</span>Enum.Something<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        assert(err <span style="color:#f92672">==</span> Enum.Something)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> Union3<span style="color:#f92672">-&gt;</span>Union2<span style="color:#f92672">-&gt;</span>Union1<span style="color:#f92672">-&gt;</span>Enum{Something1, Something2}<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        assert(err <span style="color:#f92672">==</span> Enum.Something1 <span style="color:#f92672">||</span> err <span style="color:#f92672">==</span> Enum.Something2 )
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/5-it-will-take-your-job/">
+                        Odin will take your jobs
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+    
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
