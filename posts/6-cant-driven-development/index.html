@@ -227,9 +227,9 @@ No wonder we have a pandemic of burnouts in IT.</p>
 <h2 id="the-interview-exercise">The interview exercise</h2>
 <p>Let&rsquo;s assume you signed up for an interview and the company sent you an exercise to finish in the next 8 hours.</p>
 <p>For the exercise, the company wants a REST-API method to greet new friends, but it also wants to block annoying people.</p>
-<p>The HTTP method is GET /hello/<!-- raw HTML omitted --> and it will have three types of responses:</p>
+<p>The HTTP method is GET /hello/{name} and it will have three types of responses:</p>
 <ul>
-<li>If the person calls the REST-API method for the first time, then the REST-API will respond &ldquo;Hello, nice to meet you <!-- raw HTML omitted -->&rdquo;</li>
+<li>If the person calls the REST-API method for the first time, then the REST-API will respond &ldquo;Hello, nice to meet you {name}&rdquo;</li>
 <li>If the person calls the REST-API method for the second time, but after 60 seconds, then the method will respond &ldquo;Hello my friend&rdquo;</li>
 <li>If the person calls the REST-API method repeatedly without waiting 60 seconds, then the method  will respond with &ldquo;Get away from me&rdquo;</li>
 </ul>
