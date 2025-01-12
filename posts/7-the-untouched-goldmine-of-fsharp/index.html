@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://rm4n0s.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://rm4n0s.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://rm4n0s.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://rm4n0s.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://rm4n0s.github.io//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+<title>
+    
+    The untouched goldmine of F# | (a)RManos Blog
+    
+</title>
+
+<link rel="canonical" href="https://rm4n0s.github.io/posts/7-the-untouched-goldmine-of-fsharp/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">(a)RManos Blog</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/7-the-untouched-goldmine-of-fsharp/">The untouched goldmine of F#</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">The untouched goldmine of F#</h1>
+    
+    <p class="single-summary">F# secret superpower that no one has discovered for 30 years, and it will change its popularity in enterprise software</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2025-01-12T00:00:00&#43;00:00">January 12, 2025</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      14 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#existential-crisis">Existential crisis</a></li>
+    <li><a href="#tst">TST</a></li>
+    <li><a href="#why-you-need-tst">Why you need TST</a></li>
+    <li><a href="#how-to-architect-your-software-using-tst">How to architect your software using TST</a></li>
+    <li><a href="#cdd">CDD</a></li>
+    <li><a href="#example-in-f">Example in F#</a>
+      <ul>
+        <li><a href="#interview-exercise">Interview exercise</a></li>
+        <li><a href="#architect-domain-with-ddd">Architect Domain with DDD</a></li>
+        <li><a href="#architect-functions-with-cdd">Architect Functions with CDD</a></li>
+        <li><a href="#architect-logic-with-tdd">Architect Logic with TDD</a></li>
+        <li><a href="#sample-of-implementation">Sample of implementation</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <p>(disclaimer: This article is also for OCaml developers, but I use F# as it is the language that I currently learning)</p>
+<h2 id="intro">Intro</h2>
+<p>This article is for F# developers who want to learn something new, that I haven&rsquo;t seen it being used in F# projects. It is something that made me move from Go to F#.</p>
+<p>I swear that 20 years ago I promised myself that I would never touch .NET and here I am, promoting F# as a Golang developer. How did that even happen?</p>
+<p>Well, three months ago, I researched the Odin programming language as an alternative to Go. Unfortunately, Odin didn’t fit the bill because it was missing backend libraries, but meanwhile I realized something that would shake my existence as a Golang developer.</p>
+<h2 id="existential-crisis">Existential crisis</h2>
+<p>People who may not know, Golang developers exist around microservices, DevOps, and cloud.
+Now ask yourself, how do you think a Golang developer would feel if you told him/her that it is better, faster, safer, and cheaper to create a monolithic server on a dedicated machine without containers?
+But it is not only Golang developers who would shake because all developers now have moved to microservices.</p>
+<p>Companies have moved to microservices because they believe that is the best way to handle software development.
+Microservices are a software architecture choice, not an optimization for performance. If you don&rsquo;t believe me, then look where companies deploy software. Most of them deploy the microservices in containers on the same machine and use the “localhost” network to communicate between them.
+Wouldn&rsquo;t be more efficient if they could replace the REST-API or gRPC with Go&rsquo;s channels?</p>
+<p>The question is: Why companies moved from monolithic to microservices? What do they try to avoid?
+I have two theories on that.</p>
+<ul>
+<li>My first theory is that they can&rsquo;t parse properly the errors from huge stack traces from monolithic applications.  Moving to microservices, they reduced the stack trace to three or fewer functions so they can handle the error parsing from services like ElasticSearch.</li>
+<li>My second theory is that companies can&rsquo;t keep old employees around to explain the software architecture of large monolithic applications
+to newer employees and for that reason, they separate the software into smaller microservices, believing that they will be more explainable.</li>
+</ul>
+<p>But did microservices solve these problems? No, I don&rsquo;t think so, they just put one more complexity into the mix called DevOps and SRE.
+However, these two problems can be addressed with what I call Typed Stack Traces, or TST for short.</p>
+<h2 id="tst">TST</h2>
+<p>Typed Stack Traces are like a train of Union types that return an Enum. Which means that for each function it will have a specific Union type as error type,
+that contains other Union types of other functions&rsquo; error types.</p>
+<p>For example, imagine we have four functions called F4(), F3(), F2() and F1().
+If F4() calls F3() and F3() calls F2() and so on, then the error that would be raised from F1() would have this error type &ldquo;F4Error.F3Error.F2Error.F1Error.SomethingWrong &ldquo;.
+The error is SomethingWrong, but its stack trace is “F4Error.F3Error.F2Error.F1Error.SomethingWrong”.</p>
+<p>It may not have the information on the filename or the line of code like the ordinary stack traces, but these are useless information anyway.</p>
+<p>For TST to work, you need Tagged Unions or Discriminated Unions and Enums.
+Currently, only Odin, F#, OCaml and Zig have, which means that you can&rsquo;t utilize TST in other programming languages (prove me wrong if you can). So, if you try to replicate this functionality with “string” errors, then you will fail miserably.</p>
+<p>Even though, only Odin uses TST accidentally in its core library, I believe that F# and OCaml are better fit for the task.
+The reason is that in F# you can combine all types in Union types, and they have better pattern matching.</p>
+<p>Here is an example of TST in F#</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">F1Error</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> SomethingWrong
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">F2Error</span> <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> AnotherError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> F1Error <span style="color:#66d9ef">of</span> F1Error
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">F3Error</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> F2Error <span style="color:#66d9ef">of</span> F2Error
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">F4Error</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> F3Error <span style="color:#66d9ef">of</span> F3Error
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> f1 ()<span style="color:#f92672">:</span> F1Error <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    F1Error.SomethingWrong
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> f2 ()<span style="color:#f92672">:</span> F2Error <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    F2Error.F1Error<span style="color:#f92672">(</span>f1()<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> f3 ()<span style="color:#f92672">:</span> F3Error <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    F3Error.F2Error<span style="color:#f92672">(</span>f2()<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> f4 ()<span style="color:#f92672">:</span> F4Error <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    F4Error.F3Error<span style="color:#f92672">(</span>f3()<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// val tstErr: F4Error = F3Error (F2Error (F1Error SomethingWrong))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> tstErr <span style="color:#f92672">=</span> f4()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>printfn <span style="color:#f92672">$</span><span style="color:#e6db74">&#34;%A{tstErr}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// prints &gt; F3Error (F2Error (F1Error SomethingWrong))
+</span></span></span></code></pre></div><h2 id="why-you-need-tst">Why you need TST</h2>
+<p>You need TST to architect your software. Think of it like UML, but as types in code.
+If you are an F# developer, then you already understand the importance of modeling the software in code and TST is the
+way to model in code how functions call each other.
+For example, by looking at F4Error.F3Error.F2Error.F1Error.SomethingWrong, you know that F4() calls F3() and so on.</p>
+<p>By modeling the software in code, then you preserve the architecture from undesired changes from junior developers that haven&rsquo;t understood the product.
+Furthermore, it can separate the architects from the engineers, where the architect will work on the types and then the engineers will just implement the functions based on the types.</p>
+<p>Moreover, the TST will solve the problem with parsing errors using pattern matching and switch statements that are more reliable than parsing stack traces from ElasticSearch.
+For example, an application raises an exception that a connection is closed, but you can&rsquo;t know which connection or how it is closed from the code.
+The only way to resolve this problem is to create a CRON service that will check the state of connections and wake up an administrator if there is something wrong.
+With TST, you will never need to read the logs for errors or set up a CRON service.  The architect will have to predict all the possible issues through trees of TST and how to handle each of them.</p>
+<p>Moreover, the TST will make you write better error messages to the user rather than forwarding cryptic error messages from the system. Those cryptic error messages cost millions to the companies because they will have to install services to answer calls.</p>
+<p>For example, if a connection is lost, then with TST you will have an error something like OpenAccount.CheckBalance.ConnectionLost. With that kind of error which tells us from where it came from through types, we can use pattern matching to send a message to the user that will say &ldquo;We apologize for the inconvenience, but you can&rsquo;t check the balance currently, please retry again in 10 minutes&rdquo;. At the same time, it will send a different message to the administrator saying &ldquo;Check why the server lost connection with Accounts DB&rdquo;.</p>
+<p>Additionally, by asserting TST in unit tests then you test the main logic of the application even if this logic is behind private methods that no unit test can touch.</p>
+<p>Finally, this way you can do meaningful code coverage with unit tests where each test will cover all the branches of the TST tree.</p>
+<h2 id="how-to-architect-your-software-using-tst">How to architect your software using TST</h2>
+<p>As F# developer, you know already that DDD exists to architect the Domain (like the types of variables and state) and TDD exists to architect the logic of the application, but none of these will help you to architect the function calls. So I created a new way of thinking that I call Can&rsquo;t Driven Development or CDD in short, to help you architect the function calls.</p>
+<p>Maybe you will start thinking that I am trolling you, but I want you to see it philosophically. What defines a function it is not the types of the parameters or the type of the result, but the constraints it puts on the parameters. For example, If I would ask you which message system does not allow more than 160 characters per message, then the only answer you would give me is SMS. This and other examples like this proves that constraints define functionality.</p>
+<p>If a function does one thing, then it does not return any error, but if it has constraints on the input that the type system can&rsquo;t handle, then it will return errors. By defining the errors that each function may return, we can architect the most important parts of the software. For example, in your code you may have 1000 functions, but the most essential functions are only the ones that return errors. The function that return errors are the most important because these interact with the user.</p>
+<h2 id="cdd">CDD</h2>
+<p>To CDD, you need to define the domain first and then create &ldquo;Can&rsquo;t&rdquo; statements for that domain following these steps:</p>
+<ol>
+<li>define if a function does exactly one thing. If it doesn&rsquo;t, then it contains “Can&rsquo;t” statements.</li>
+<li>function that return negative results are “Can&rsquo;t” statements. Negative results are the ones that contain “Not” in their explanation.</li>
+<li>if an action uses resources, then for these resources, you need to create “Can&rsquo;t” statements to handle predefined limitations.</li>
+</ol>
+<p>After defining the &ldquo;Can&rsquo;t&rdquo; statements, we go to the next steps to write them down as errors in the error type of the function.</p>
+<p>Here is the list of rules that you have to follow to architect your function calls and start developing</p>
+<ol>
+<li>to find what functions we have to create, first we have to transform our “can&rsquo;t” statements to errors and split them into functions based on a set of problems in the same domain. To achieve that, we need to refactor our error types in iterations, until the mental model is complete.
+<ul>
+<li>first, take all the “can&rsquo;t” statements and make them errors in an Enum for the main function.</li>
+<li>for the second iteration, split the errors in their own Enums based on common subject, and transform the main Enum to a Union type that contains all the newly created Enums</li>
+<li>repeat the above rules for all the newly created Enum types until all “can&rsquo;t” statements are in their set of domains.</li>
+</ul>
+</li>
+<li>define the order of errors in the types based on the order of calls in the functions.</li>
+<li>create the functions for the error types
+<ul>
+<li>make sure they take all of their inputs from the parameters, and they don&rsquo;t use any global variable.</li>
+<li>you can create functions that don&rsquo;t return any error type to reduce the code length of your main functions, but you can&rsquo;t add new errors.</li>
+</ul>
+</li>
+<li>lock the errors with switch statements in tests, to make sure no one has added new errors because new errors will change the architecture.</li>
+<li>start developing your software with TDD by asserting TST trees first</li>
+</ol>
+<h2 id="example-in-f">Example in F#</h2>
+<p>To understand CDD in practice, I need to show you the thinking process through an exercise. For this exercise, let&rsquo;s assume you signed up for an interview and the company sent you an exercise to finish in the next 8 hours.</p>
+<h3 id="interview-exercise">Interview exercise</h3>
+<p>The company wants a REST-API method to greet new friends, but it also wants to block annoying people.</p>
+<p>The HTTP method is GET /hello/{name} and it will have three types of responses:</p>
+<ul>
+<li>If the person calls the REST-API method for the first time, then the REST-API will respond &ldquo;Hello, nice to meet you {name}&rdquo;</li>
+<li>If the person calls the REST-API method for the second time, but after 60 seconds, then the method will respond &ldquo;Hello, my friend&rdquo;</li>
+<li>If the person calls the REST-API method repeatedly without waiting 60 seconds, then the method will respond with &ldquo;Get away from me&rdquo;</li>
+</ul>
+<p>To finish the project, we need to follow a specific order of methodologies. First we need to architect the state with DDD, then architect the function calls with CDD and at the end architect the logic with TDD.</p>
+<h3 id="architect-domain-with-ddd">Architect Domain with DDD</h3>
+<p>On my previous blog post, I bashed on DDD. However, after watching &ldquo;Domain Driven Design with the F# type System - Scott Wlaschin&rdquo;, I was intrigued.
+Let&rsquo;s use it for our project.</p>
+<p>From the exercise, I understand that we need to create a function for responding to other people,  remembering their names and categorize them as friends or not based on the last time we have seen them.</p>
+<p>Let&rsquo;s create the type of the person</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Person</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>    IsFriend<span style="color:#f92672">:</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>    LastSeen<span style="color:#f92672">:</span> DateTime 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Now we need to store this person with the rest of the people. Let&rsquo;s create the type we will store the people.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Storage</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> people <span style="color:#f92672">=</span> Dictionary<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">string</span><span style="color:#f92672">,</span> Person<span style="color:#f92672">&gt;</span>()
+</span></span></code></pre></div><p>For each person who says “Hello” to us, we need to respond based on the last time we saw that person. The exercise says 60 seconds, but I want it configurable for faster tests.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Configurations</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>      FriendUntilRepeatInSeconds<span style="color:#f92672">:</span> int 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>The exercise requests an action to respond to each person who says &ldquo;Hello&rdquo; to us. Let&rsquo;s create the function, that returns a string but also its error type, to start architecting the function calls.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HelloFromError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> HelloFrom <span style="color:#f92672">(</span>name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span><span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span> <span style="color:#f92672">*</span> HelloFromError <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    HelloFromError.NoError
+</span></span></code></pre></div><p>Thanks to DDD we established the domain, but this is how far DDD can get us. From now on, we need to use CDD methodology to architect the function calls.</p>
+<h3 id="architect-functions-with-cdd">Architect Functions with CDD</h3>
+<p>Let&rsquo;s use each rule from CDD methodology, one by one, for this exercise.</p>
+<ul>
+<li>The current exercise requires for the software to return three types of responses, where two are errors (when the person is unknown or a spammer) and one positive (when the person is a friend).</li>
+<li>We will use RAM to save the list of people, which means that we need to configure its limitations from the start.</li>
+</ul>
+<p>So here is the list of “can&rsquo;t” statements:</p>
+<ul>
+<li>If the service CANT find the name from the list of people, then it returns an error that the name is unknown and adds the name to the list of people as friends</li>
+<li>The service CANT consider anyone as a friend who bothers the server constantly and for less than a minute.</li>
+<li>The service can&rsquo;t accept new names when it reaches a limit.</li>
+<li>The service can&rsquo;t accept names over a specific length, as it may consume resources that the hardware doesn&rsquo;t have.</li>
+</ul>
+<h4 id="first-iteration">First iteration</h4>
+<p>Define all the &ldquo;Can&rsquo;t&rdquo; statements as Enums in the error type of our main function &ldquo;HelloFrom&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HelloFromError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NameTooLong
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Spammer
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Unknown
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NotEnoughSpace
+</span></span></code></pre></div><h4 id="second-iteration">Second iteration</h4>
+<p>Split the errors into functions based on the domain you think they should be.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">VerifyNameError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NameTooLong
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AuthenticateNameError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Spammer
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Unknown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AddNameToFriendsError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NotEnoughSpace
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HelloFromError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> VerifyNameError <span style="color:#66d9ef">of</span> VerifyNameError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> AuthenticateNameError <span style="color:#66d9ef">of</span> AuthenticateNameError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> AddNameToFriendsError <span style="color:#66d9ef">of</span> AddNameToFriendsError
+</span></span></code></pre></div><p>Now we have the architecture of function calls.
+Furthermore, you can see that we put them in order based on the way the functions will be called.
+For example, we put AuthenticateNameError before AddNameToFriendsError because we know that we need to authenticate the person before we put it in the list of people.</p>
+<h3 id="architect-logic-with-tdd">Architect Logic with TDD</h3>
+<p>Now we are going to architect the logic of our application with TDD, which means that before implementing the functions, we will create the tests.</p>
+<p>These tests will be meaningful because they will test TST of &ldquo;HelloFrom&rdquo; function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> ``test name too long`` () <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#f92672">(</span>msg<span style="color:#f92672">,</span> err<span style="color:#f92672">)</span> <span style="color:#f92672">=</span> HelloFrom<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;manoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Assert.Equal<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Get away from me&#34;</span><span style="color:#f92672">,</span> msg<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> mutable passedNameTooLong <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> err <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> VerifyNameError vferr <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> vferr <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">|</span> NameTooLong <span style="color:#f92672">-&gt;</span> passedNameTooLong <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> ()
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> <span style="color:#f92672">_</span> <span style="color:#f92672">-&gt;</span> ()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Assert.True<span style="color:#f92672">(</span>passedNameTooLong<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="sample-of-implementation">Sample of implementation</h3>
+<p>Thanks to DDD, CDD and TDD, I did a lot of refactoring on the types. For example, I put HelloFrom in a module and I made the other functions private. I even added an extra error (kind of useless) for concurrency failures.</p>
+<p>Here is the end result</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span>    <span style="color:#66d9ef">member</span> x.<span style="color:#a6e22e">HelloFrom</span> <span style="color:#f92672">(</span>name<span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span><span style="color:#f92672">)</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">string</span> <span style="color:#f92672">*</span> HelloFromError <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> vername <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>verifyName name 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> vername <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">|</span> NameTooLong <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;Get away from me&#34;</span><span style="color:#f92672">,</span>VerifyNameError<span style="color:#f92672">(</span>vername<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">|</span> VerifyNameError.NoError <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">let</span> anerr <span style="color:#f92672">=</span>   x<span style="color:#f92672">.</span>authenticateName name
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">match</span> anerr <span style="color:#66d9ef">with</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">|</span> Spammer <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">let</span> uftserr <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>updateFriendToSpammer name 
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> uftserr<span style="color:#f92672">.</span>IsNameDoesntExist <span style="color:#66d9ef">then</span> 
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;Someone touched my memory&#34;</span><span style="color:#f92672">,</span> UpdateFriendToSpammerError<span style="color:#f92672">(</span>uftserr<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;Get away from me&#34;</span><span style="color:#f92672">,</span> AuthenticateNameError<span style="color:#f92672">(</span>anerr<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">|</span> Unknown <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">let</span> antferr <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>addNameToFriends<span style="color:#f92672">(</span>name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> antferr<span style="color:#f92672">.</span>IsNotEnoughSpace <span style="color:#66d9ef">then</span> 
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;Not enough space in brain&#34;</span><span style="color:#f92672">,</span> AddNameToFriendsError<span style="color:#f92672">(</span>antferr<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span> 
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">$</span><span style="color:#e6db74">&#34;Hello, nice to meet you {name}&#34;</span> <span style="color:#f92672">,</span> AuthenticateNameError<span style="color:#f92672">(</span>anerr<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">|</span> AuthenticateNameError.NoError <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>                store<span style="color:#f92672">.</span>UpdatePerson <span style="color:#f92672">(</span>name<span style="color:#f92672">,</span> <span style="color:#f92672">{</span>IsFriend <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> <span style="color:#f92672">;</span> LastSeen <span style="color:#f92672">=</span> DateTime.Now<span style="color:#f92672">})</span> <span style="color:#f92672">|&gt;</span> ignore
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">$</span><span style="color:#e6db74">&#34;Hello, my friend&#34;</span><span style="color:#f92672">,</span> HelloFromError.NoError
+</span></span></code></pre></div><p>For the rest of the code you can visit <a href="https://github.com/rm4n0s/hello_from_fsharp">https://github.com/rm4n0s/hello_from_fsharp</a>, but I advise you to not expect much as I started learning F# two weeks ago.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>As you can see, thanks to TST, we now have discovered a new way of architecting, developing and maintaining software.</p>
+<p>However, I wonder why this hasn&rsquo;t been discovered earlier. Why we had to wait for 30 years? Was it discovered but dismissed as stupid?
+I don&rsquo;t believe that it is stupid. It is the reason that made me move from Go to F# (and OCaml).</p>
+<p>I believe that this will change how we develop, maintain and run software.
+It will let us go back to developing monolithic applications in waterfall project management and resurrect the software architects jobs, especially now where just one server can have hundreds of cores and hundreds of GB of RAM.
+It will replace DevOps and SRE with software engineers and system administrators.</p>
+
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/6-cant-driven-development/">
+                        Can&#39;t Driven Development
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://gohugo.io/">Hugo</a>
+        and
+        <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+    </p>
+    
+    
+    
+
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+    
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
