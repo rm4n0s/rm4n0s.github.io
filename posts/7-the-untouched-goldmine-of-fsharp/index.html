@@ -256,10 +256,42 @@ Furthermore, it can separate the architects from the engineers, where the archit
 For example, an application raises an exception that a connection is closed, but you can&rsquo;t know which connection or how it is closed from the code.
 The only way to resolve this problem is to create a CRON service that will check the state of connections and wake up an administrator if there is something wrong.
 With TST, you will never need to read the logs for errors or set up a CRON service.  The architect will have to predict all the possible issues through trees of TST and how to handle each of them.</p>
-<p>Moreover, the TST will make you write better error messages to the user rather than forwarding cryptic error messages from the system. Those cryptic error messages cost millions to the companies because they will have to install services to answer calls.</p>
-<p>For example, if a connection is lost, then with TST you will have an error something like OpenAccount.CheckBalance.ConnectionLost. With that kind of error which tells us from where it came from through types, we can use pattern matching to send a message to the user that will say &ldquo;We apologize for the inconvenience, but you can&rsquo;t check the balance currently, please retry again in 10 minutes&rdquo;. At the same time, it will send a different message to the administrator saying &ldquo;Check why the server lost connection with Accounts DB&rdquo;.</p>
-<p>Additionally, by asserting TST in unit tests then you test the main logic of the application even if this logic is behind private methods that no unit test can touch.</p>
-<p>Finally, this way you can do meaningful code coverage with unit tests where each test will cover all the branches of the TST tree.</p>
+<p>Moreover, the TST will make you write better error messages to the user rather than forwarding cryptic error messages from the system. Those cryptic error messages cost millions to the companies because they will have to install services to answer customer&rsquo;s calls.</p>
+<p>For example, if a connection is lost, then with TST you will have an error something like &ldquo;GetAccount.GetBalance.MySQLCall.ConnectionLost&rdquo;. With that kind of error which tells us from where it came from through types, we can use pattern matching to send a message specifically to the user and another one specifically for the administrators.</p>
+<p>Here an example of this scenario in F#:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MySQLCallError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> ConnectionLost
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetBalanceError</span> <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> MySQLCallError <span style="color:#66d9ef">of</span> MySQLCallError
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetStocksError</span> <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> MySQLCallError <span style="color:#66d9ef">of</span> MySQLCallError
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetAccountError</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> GetBalanceError <span style="color:#66d9ef">of</span> GetBalanceError
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> GetStocksError <span style="color:#66d9ef">of</span> GetStocksError
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> viewAccountPage accountID <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> accountRes <span style="color:#f92672">=</span> GetAccount accountID 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> accountRes <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Error accountErr <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> accountErr <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">|</span> GetBalanceError sterr <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">match</span> sterr <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">|</span> MySQLCallError myerr <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">match</span> myerr <span style="color:#66d9ef">with</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">|</span> ConnectionLost <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>                    printErrMsgToUser <span style="color:#e6db74">&#34;We apologize for the inconvenience, but you can&#39;t check the account currently, please retry again in 10 minutes&#34;</span>
+</span></span><span style="display:flex;"><span>                    informAdministrators <span style="color:#e6db74">&#34;The server lost connection with the DB for Accounts&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> Ok account <span style="color:#f92672">-&gt;</span>
+</span></span><span style="display:flex;"><span>        showAccount account
+</span></span></code></pre></div><p>Additionally, by asserting TST in unit tests then you test the main logic of the application even if this logic is behind private methods that no unit test can touch.</p>
+<p>Finally, this way you can do meaningful code coverage with unit tests where each test will cover all the branches of the TST tree. Also, this way you lock the architecture by making the compiler warn you about any change in the TST tree.</p>
 <h2 id="how-to-architect-your-software-using-tst">How to architect your software using TST</h2>
 <p>As F# developer, you know already that DDD exists to architect the Domain (like the types of variables and state) and TDD exists to architect the logic of the application, but none of these will help you to architect the function calls. So I created a new way of thinking that I call Can&rsquo;t Driven Development or CDD in short, to help you architect the function calls.</p>
 <p>Maybe you will start thinking that I am trolling you, but I want you to see it philosophically. What defines a function it is not the types of the parameters or the type of the result, but the constraints it puts on the parameters. For example, If I would ask you which message system does not allow more than 160 characters per message, then the only answer you would give me is SMS. This and other examples like this proves that constraints define functionality.</p>
