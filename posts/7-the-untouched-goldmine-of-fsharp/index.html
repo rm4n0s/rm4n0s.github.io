@@ -269,19 +269,15 @@ With TST, you will never need to read the logs for errors or set up a CRON servi
 <p>For example, if a connection is lost, then with TST you will have an error something like &ldquo;GetAccount.GetBalance.MySQLCall.ConnectionLost&rdquo;. With that kind of error which tells us from where it came from through types, we can use pattern matching to send a message specifically to the user and another one specifically for the administrators.</p>
 <p>Here an example of this scenario in F#:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MySQLCallError</span> <span style="color:#f92672">=</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> ConnectionLost
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetBalanceError</span> <span style="color:#f92672">=</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> MySQLCallError <span style="color:#66d9ef">of</span> MySQLCallError
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetStocksError</span> <span style="color:#f92672">=</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> MySQLCallError <span style="color:#66d9ef">of</span> MySQLCallError
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GetAccountError</span> <span style="color:#f92672">=</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> NoError
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> GetBalanceError <span style="color:#66d9ef">of</span> GetBalanceError
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">|</span> GetStocksError <span style="color:#66d9ef">of</span> GetStocksError
 </span></span><span style="display:flex;"><span>
