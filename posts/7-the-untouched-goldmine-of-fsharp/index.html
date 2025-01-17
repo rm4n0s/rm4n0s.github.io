@@ -168,6 +168,7 @@
     <li><a href="#conclusion">Conclusion</a></li>
     <li><a href="#update-faq">(UPDATE) FAQ</a>
       <ul>
+        <li><a href="#q-ah-you-just-discovered-adt-that-is-all">Q: &ldquo;Ah! you just discovered ADT, that is all!&rdquo;</a></li>
         <li><a href="#q-typescript-rust-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Rust, Kotlin, Scala, Go etc can do the same thing!&rdquo;</a></li>
         <li><a href="#q-why-are-stack-traces-useless">Q: &ldquo;Why are stack traces useless?&rdquo;</a></li>
         <li><a href="#q-why-you-used-string--hellofromerror-and-not-resultstringhellofromerror">Q: &ldquo;Why you used &lsquo;string * HelloFromError&rsquo; and not Result&lt;string,HelloFromError&gt;&rdquo;</a></li>
@@ -461,6 +462,10 @@ It will let us go back to developing monolithic applications in waterfall projec
 <p>I believe in a world where software architects exist. The architects will create the types and engineers will implement the functions. The engineers will be able to refactor the functions as much as they want, but they will never be able to refactor types without the approval of the architects.</p>
 <p>A world where DevOps and SRE are replaced by system administrators.</p>
 <h2 id="update-faq">(UPDATE) FAQ</h2>
+<h3 id="q-ah-you-just-discovered-adt-that-is-all">Q: &ldquo;Ah! you just discovered ADT, that is all!&rdquo;</h3>
+<p>No, I discovered a better use of ADT for errors and away to mitigate any possible failure from the start.
+While you concatenate your errors so you can have pseudo stack traces in your logs.</p>
+<p>We are not the same.</p>
 <h3 id="q-typescript-rust-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Rust, Kotlin, Scala, Go etc can do the same thing!&rdquo;</h3>
 <p>No, they don&rsquo;t have TST. But if you believe that your favorite programming language has something similar to TST, then solve the <a href="https://rm4n0s.github.io/posts/3-error-handling-challenge/">&ldquo;Error Handling Challenge&rdquo;</a>
 and send me the solution in Bluesky to put you in the list of challengers who solved the problem.</p>
