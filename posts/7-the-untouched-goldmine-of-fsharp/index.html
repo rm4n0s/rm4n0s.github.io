@@ -485,7 +485,7 @@ and send me the solution in Bluesky to put you in the list of challengers who so
 <p>Furthermore, you can even if-cond a specific error enum from the TST tree.</p>
 <p>But pattern matching all the tree, you predict every failure, and you handle it responsible, so nothing will ever surprise you.</p>
 <h3 id="q-what-is-the-difference-between-getaccountgetbalancemysqlcallconnectionlost-and-getaccountgetstocksmysqlcallconnectionlost-if-only-what-matters-is-mysqlcallconnectionlost">Q: &ldquo;What is the difference between GetAccount.GetBalance.MySQLCall.ConnectionLost and GetAccount.GetStocks.MySQLCall.ConnectionLost, if only what matters is MySQLCall.ConnectionLost&rdquo;</h3>
-<p>If you use one DB for the software, then can just call if-cond on MySQLCall.ConnectionLost if you like.</p>
+<p>If you use one DB for the software, then you can just call if-cond on MySQLCall.ConnectionLost if you like.</p>
 <p>If you use three DBs, then you can still use if-cond on MySQLCall.ConnectionLost as a type that includes the database&rsquo;s name as well.</p>
 <p>The point of going through the whole pattern matching is to predict and handle every case.</p>
 <p>Also, to give a more detail explanation of the problem to the user who paid lots of cash. So he/her doesn&rsquo;t have to call you back middle of the night and make you read the stack trace out loud from the logs.</p>
