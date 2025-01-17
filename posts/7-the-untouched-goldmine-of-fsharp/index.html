@@ -471,7 +471,7 @@ While you concatenate your errors so you can have pseudo stack traces in your lo
 and send me the solution in Bluesky to put you in the list of challengers who solved the problem.</p>
 <h3 id="q-why-are-stack-traces-useless">Q: &ldquo;Why are stack traces useless?&rdquo;</h3>
 <p>They are useless because you don&rsquo;t know when they will happen, and when they happen it is too late!</p>
-<p>I don&rsquo;t care if the stack traces are from exceptions or “error wrapping” (concatenated string of errors to create a pseudo-stack trace), it is still useless.</p>
+<p>I don&rsquo;t care if the stack traces are from exceptions or “error wrapping” (concatenated string of errors to create a pseudo-stack trace), they are still useless.</p>
 <p>The point of TST is not to read them somewhere in the logs when your system crashes or when you receive a complaint from a customer to fix a bug.</p>
 <p>The point of TST is to replace logs with predicted error handling.</p>
 <p>No more screams of “The software crashed! Give me an hour to figure why in the logs”</p>
@@ -484,7 +484,7 @@ and send me the solution in Bluesky to put you in the list of challengers who so
 <p>You can pattern match half the tree and return a general error.</p>
 <p>You can pattern match only a leaf of the tree.</p>
 <p>Furthermore, you can even if-cond a specific error enum from the TST tree.</p>
-<p>But pattern matching all the tree, you predict every failure, and you handle it responsible, so nothing will ever surprise you.</p>
+<p>But by pattern matching all the tree, you predict every failure, and you handle it responsible, so nothing will ever surprise you.</p>
 <h3 id="q-what-is-the-difference-between-getaccountgetbalancemysqlcallconnectionlost-and-getaccountgetstocksmysqlcallconnectionlost-if-only-what-matters-is-mysqlcallconnectionlost">Q: &ldquo;What is the difference between GetAccount.GetBalance.MySQLCall.ConnectionLost and GetAccount.GetStocks.MySQLCall.ConnectionLost, if only what matters is MySQLCall.ConnectionLost&rdquo;</h3>
 <p>If you use one DB for the software, then you can just call if-cond on MySQLCall.ConnectionLost if you like.</p>
 <p>If you use three DBs, then you can still use if-cond on MySQLCall.ConnectionLost as a type that includes the database&rsquo;s name as well.</p>
