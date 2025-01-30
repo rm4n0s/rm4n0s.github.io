@@ -169,7 +169,7 @@
     <li><a href="#update-faq">(UPDATE) FAQ</a>
       <ul>
         <li><a href="#q-ah-you-just-discovered-adt-that-is-all">Q: &ldquo;Ah! you just discovered ADT, that is all!&rdquo;</a></li>
-        <li><a href="#q-typescript-rust-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Rust, Kotlin, Scala, Go etc can do the same thing!&rdquo;</a></li>
+        <li><a href="#q-typescript-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Kotlin, Scala, Go etc can do the same thing!&rdquo;</a></li>
         <li><a href="#q-why-are-stack-traces-useless">Q: &ldquo;Why are stack traces useless?&rdquo;</a></li>
         <li><a href="#q-why-you-used-string--hellofromerror-and-not-resultstringhellofromerror">Q: &ldquo;Why you used &lsquo;string * HelloFromError&rsquo; and not Result&lt;string,HelloFromError&gt;&rdquo;</a></li>
         <li><a href="#q-isnt-too-excessive-to-pattern-match-all-the-tst-tree">Q: &ldquo;Isn&rsquo;t too excessive to pattern match all the TST tree?&rdquo;</a></li>
@@ -184,7 +184,7 @@
   
 
   <div class="single-content">
-    <p>(disclaimer: This article is also for OCaml developers, but I use F# as it is the language that I currently learning)</p>
+    <p>(disclaimer: This article is also for OCaml and Rust developers, but I use F# as it is the language that I currently learning)</p>
 <h2 id="intro">Intro</h2>
 <p>This article is for F# developers who want to learn something new, that I haven&rsquo;t seen it being used in F# projects. It is something that made me move from Go to F#.</p>
 <p>I swear that 20 years ago I promised myself that I would never touch .NET and here I am, promoting F# as a Golang developer. How did that even happen?</p>
@@ -213,8 +213,8 @@ If F4() calls F3() and F3() calls F2() and so on, then the error that would be r
 The error is SomethingWrong, but its stack trace is “F4Error.F3Error.F2Error.F1Error.SomethingWrong”.</p>
 <p>It may not have the information on the filename or the line of code like the ordinary stack traces, but these are useless information anyway.</p>
 <p>For TST to work, you need Tagged Unions or Discriminated Unions and Enums.
-Currently, only Odin, F#, OCaml and Zig have, which means that you can&rsquo;t utilize TST in other programming languages (prove me wrong if you can). So, if you try to replicate this functionality with “string” errors, then you will fail miserably.</p>
-<p>Even though, only Odin uses TST accidentally in its core library, I believe that F# and OCaml are better fit for the task.
+Currently, only Odin, F#, OCaml, Rust and Zig have, which means that you can&rsquo;t utilize TST in other programming languages (prove me wrong if you can). So, if you try to replicate this functionality with “string” errors, then you will fail miserably.</p>
+<p>Even though, only Odin uses TST accidentally in its core library, I believe that F#, OCaml and Rust are better fit for the task.
 The reason is that in F# you can combine all types in Union types, and they have better pattern matching.</p>
 <p>Here is an example of TST in F#</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">F1Error</span> <span style="color:#f92672">=</span>
@@ -456,7 +456,7 @@ For example, we put AuthenticateNameError before AddNameToFriendsError because w
 <h2 id="conclusion">Conclusion</h2>
 <p>As you can see, thanks to TST, we now have discovered a new way of architecting, developing and maintaining software.</p>
 <p>However, I wonder why this hasn&rsquo;t been discovered earlier. Why we had to wait for 30 years? Was it discovered but dismissed as stupid?
-I don&rsquo;t believe that it is stupid. It is the reason that made me move from Go to F# (and OCaml).</p>
+I don&rsquo;t believe that it is stupid. It is the reason that made me move from Go to F#.</p>
 <p>I believe that this will change how we develop, maintain and run software.
 It will let us go back to developing monolithic applications in waterfall project management and resurrect the software architects jobs, especially now where just one server can have hundreds of cores and hundreds of GB of RAM.</p>
 <p>I believe in a world where software architects exist. The architects will create the types and engineers will implement the functions. The engineers will be able to refactor the functions as much as they want, but they will never be able to refactor types without the approval of the architects.</p>
@@ -466,7 +466,7 @@ It will let us go back to developing monolithic applications in waterfall projec
 <p>No, I discovered a better use of ADT for errors and away to mitigate any possible failure from the start.
 While you concatenate your errors so you can have pseudo stack traces in your logs.</p>
 <p>We are not the same.</p>
-<h3 id="q-typescript-rust-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Rust, Kotlin, Scala, Go etc can do the same thing!&rdquo;</h3>
+<h3 id="q-typescript-kotlin-scala-go-etc-can-do-the-same-thing">Q: &ldquo;Typescript, Kotlin, Scala, Go etc can do the same thing!&rdquo;</h3>
 <p>No, they don&rsquo;t have TST. But if you believe that your favorite programming language has something similar to TST, then solve the <a href="https://rm4n0s.github.io/posts/3-error-handling-challenge/">&ldquo;Error Handling Challenge&rdquo;</a>
 and send me the solution in Bluesky to put you in the list of challengers who solved the problem.</p>
 <h3 id="q-why-are-stack-traces-useless">Q: &ldquo;Why are stack traces useless?&rdquo;</h3>
